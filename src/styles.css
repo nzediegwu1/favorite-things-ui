@@ -1,0 +1,160 @@
+.bg-info {
+  background-color: #540109 !important;
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+.btn-outline-primary {
+  color: white;
+  border-color: #adb5bd;
+}
+.search-button {
+  background-color: #540109;
+  margin-right: 0.5em;
+}
+.navbar-expand-sm .navbar-nav .nav-link {
+  padding-left: 0;
+}
+.nav-btn {
+  width: 100%;
+}
+@media screen and (max-width: 325px) {
+  .search-button {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 575px) {
+  .form-inline .form-control {
+    width: 8em;
+  }
+}
+@media screen and (max-width: 575px) {
+  .form-inline .form-control {
+    width: 87%;
+    margin: auto;
+  }
+}
+.card-footer {
+  color: black;
+}
+.card-img {
+  height: fit-content;
+}
+.card-body {
+  box-shadow: 5px 5px 5px grey;
+}
+
+.btn-outline-primary:hover,
+.search-button:hover {
+  background-color: whitesmoke;
+  color: #540109;
+  border-color: #721c24;
+}
+thead {
+  background-color: #540109;
+  color: white;
+}
+.header-container {
+  margin-bottom: 1em;
+}
+.favourite-tag {
+  font-size: x-large;
+}
+[aria-colindex="4"] {
+  font-size: 1.5em;
+  line-height: 1;
+}
+.edit-favourite {
+  border-bottom: solid;
+  border-width: thin;
+  border-color: grey;
+}
+.fa-trash {
+  color: red;
+}
+.fa-edit {
+  color: #540109;
+}
+
+.btn-primary {
+  color: #540109;
+  border-color: #540109;
+  background-color: white;
+}
+[aria-colindex="4"] {
+  font-size: medium;
+}
+.btn-attributes {
+  color: #721c24;
+  background-color: #f8f9fa;
+  border-color: #721c24;
+}
+th[aria-colindex="5"] {
+  padding-left: 1.5em;
+}
+.btn-attributes:hover {
+  background-color: #540109;
+}
+.form-buttons {
+  float: right;
+}
+.cancel-form {
+  margin-right: 0.5em;
+}
+.btn-favourite {
+  color: white;
+  background-color: #540109;
+}
+.add-attr-btn.btn-primary:hover {
+  color: white;
+  background-color: #721c24;
+}
+.favourite-form {
+  width: 85%;
+  margin: auto;
+}
+.new-attribute {
+  margin: auto;
+}
+.card {
+  height: 200px;
+}
+
+.card-body {
+  background-color: #540109;
+}
+
+.manage-groups {
+  float: right;
+  margin-top: 1em;
+}
+.col {
+  margin-bottom: 9em;
+}
+@media screen and (max-width: 575px) and (min-width: 490px) {
+  .col {
+    margin-bottom: 28em;
+  }
+}
+
+@media screen and (max-width: 490px) and (min-width: 426px) {
+  .col {
+    margin-bottom: 22em;
+  }
+}
+
+@media screen and (max-width: 426px) and (min-width: 370px) {
+  .col {
+    margin-bottom: 18em;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .col {
+    margin-bottom: 15em;
+  }
+}
+.btn.btn-primary.btn-sm:hover {
+  background-color: antiquewhite
+}
