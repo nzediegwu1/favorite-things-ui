@@ -4,7 +4,15 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    categoryModal: {
+      title: ""
+    }
+  },
+  mutations: {
+    setCategoryModalState(state, payload) {
+      state.categoryModal = payload;
+    }
+  },
   actions: {}
 });

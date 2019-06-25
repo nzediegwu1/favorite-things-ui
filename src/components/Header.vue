@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <b-navbar toggleable="sm" type="dark" variant="info">
+    <b-navbar fixed="top" toggleable="sm" type="dark" variant="info">
       <b-navbar-brand @click="gotoHome" href="#">
         <b-button variant="outline-primary">FT</b-button>
       </b-navbar-brand>
@@ -16,14 +16,13 @@
             </b-button>
           </b-nav-item>
           <b-nav-item href="#">
-            <b-button v-b-modal.add-group class="nav-btn" variant="outline-primary">
+            <b-button
+              @click="setCategoryModalState"
+              v-b-modal.category-modal
+              class="nav-btn"
+              variant="outline-primary"
+            >
               <i class="fa fa-plus"></i> Group
-              <!-- <i class="fa fa-group"></i> -->
-            </b-button>
-          </b-nav-item>
-          <b-nav-item href="#">
-            <b-button v-b-modal.add-attribute class="nav-btn" variant="outline-primary">
-              <i class="fa fa-plus"></i> Attr
             </b-button>
           </b-nav-item>
         </b-navbar-nav>
@@ -45,20 +44,42 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <Modal></Modal>
+    <AddFavourite></AddFavourite>
+    <CreateAttribute :dropdownList="attributeList"></CreateAttribute>
+    <CategoryModal :title="categoryModalTitle"></CategoryModal>
   </div>
 </template>
 
 <script>
-import Modal from "./Modal";
+import AddFavourite from "./modals/AddFavourite";
+import CreateAttribute from "./modals/CreateAttribute";
+import CategoryModal from "./modals/CategoryModal";
+
 export default {
+  data() {
+    return {
+      attributeList: ["text", "number", "date", "enum"]
+    };
+  },
+  computed: {
+    categoryModalTitle() {
+      return this.$store.state.categoryModal.title;
+    }
+  },
   methods: {
     gotoHome() {
       this.$router.push("/");
+    },
+    setCategoryModalState() {
+      this.$store.commit("setCategoryModalState", {
+        title: "Create category"
+      });
     }
   },
   components: {
-    Modal
+    AddFavourite,
+    CreateAttribute,
+    CategoryModal
   }
 };
 </script>

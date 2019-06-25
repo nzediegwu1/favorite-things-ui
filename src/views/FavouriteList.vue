@@ -9,6 +9,12 @@
           <i class="fa fa-info-circle"></i>
         </b-button>
       </template>
+      <template slot="logs" slot-scope="data" v-html="data">
+        <b-button class="btn-attributes" v-b-modal.view-attributes>
+          <i class="fa fa-info-circle"></i>
+        </b-button>
+      </template>
+
       <template slot="manage" slot-scope="data" v-html="data">
         <!-- `data.value` is the value after formatted by the Formatter -->
         <b-dropdown dropright text variant="primary">
@@ -33,27 +39,22 @@ export default {
         {
           ranking: 40,
           title: "Dickerson",
-          description: "The guy who made me believe in myself",
-          attributes: ""
+          description: "The guy who made me believe in myself"
         },
         {
           ranking: 21,
           title: "Larsen",
-          description: "My childhood friend since day 1",
-          attributes: ""
+          description: "My childhood friend since day 1"
         },
         {
           ranking: 89,
-          title: "Geneva",
-          description:
-            "An awesome software engineer who mentored me at my early days",
-          attributes: ""
+          title: "Victor",
+          description: "The software engineer who mentored me in my early days"
         },
         {
           ranking: 38,
           title: "Jami",
-          description: "My gist buddy. Very smart dude. I can fight for him",
-          attributes: ""
+          description: "My gist buddy. Very smart dude"
         }
       ],
       fields: [
@@ -67,6 +68,9 @@ export default {
         },
         {
           key: "description"
+        },
+        {
+          key: "logs"
         },
         {
           key: "attributes"
