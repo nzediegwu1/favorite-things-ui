@@ -57,7 +57,7 @@ thead {
 .header-container {
   margin-bottom: 1em;
 }
-.favourite-tag {
+.header-font {
   font-size: x-large;
 }
 [aria-colindex="4"] {
@@ -240,14 +240,17 @@ thead {
 
 #delete-modal___BV_modal_body_ {
   color: red;
+  text-align: center;
 }
-.log-control {
+.content-header {
   margin-bottom: 2em;
   box-shadow: 5px 5px 5px grey;
   background-color: #540109;
   color: white;
   padding: 1em;
   text-align: left;
+  max-width: 100%;
+  margin-left: auto;
 }
 
 #favourites-table th {

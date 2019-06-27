@@ -1,6 +1,6 @@
 <template>
   <b-modal ref="delete-modal" id="delete-modal" :title="title">
-    <h6 class="my-4">Are you sure you want to delete this?</h6>
+    <h4 class="my-4">Are you sure you want to delete?</h4>
     <div class="form-buttons"></div>
   </b-modal>
 </template>
