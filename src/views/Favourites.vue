@@ -1,9 +1,17 @@
 <template>
-  <div class="container">
+  <div class="custom-container">
     <div class="text-center">
-      <b class="favourite-tag">Favourite {{ favouriteItem }}</b>
+      <ContentHeader :goback="gotoHome" :headerText="headerText"></ContentHeader>
     </div>
-    <b-table id="favourites-table" outlined responsive striped hover :fields="fields" :items="items">
+    <b-table
+      id="favourites-table"
+      outlined
+      responsive
+      striped
+      hover
+      :fields="fields"
+      :items="items"
+    >
       <template slot="metadata" slot-scope="data" v-html="data">
         <b-button class="btn-metadata" v-b-modal.view-metadata>
           <i class="fa fa-info-circle"></i>
@@ -37,9 +45,12 @@
 
 <script>
 import Metadata from "../components/modals/Metadata";
+import ContentHeader from "../components/ContentHeader";
+
 export default {
   components: {
     Metadata,
+    ContentHeader
   },
   data() {
     return {
@@ -88,7 +99,7 @@ export default {
           label: "⚙️"
         }
       ],
-      favouriteItem: "Friends"
+      headerText: `Favourite friends`
     };
   },
   methods: {
@@ -104,6 +115,9 @@ export default {
     },
     gotoAuditLogs() {
       this.$router.push("/favouriteId/logs");
+    },
+    gotoHome() {
+      this.$router.push("/");
     }
   }
 };

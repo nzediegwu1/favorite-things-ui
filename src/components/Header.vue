@@ -34,23 +34,18 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0 search-button" type="submit">
-              <i class="fa fa-search"></i>
-            </b-button>
+            <b-form-input placeholder="favourite thing" class="mr-sm-2"></b-form-input>
+            <b-dropdown variant="outline-primary" split text="Search" class="m-2">
+              <b-dropdown-item href="#">Friends</b-dropdown-item>
+              <b-dropdown-item href="#">Movies</b-dropdown-item>
+              <b-dropdown-item href="#">Books</b-dropdown-item>
+              <b-dropdown-item href="#">Food</b-dropdown-item>
+            </b-dropdown>
           </b-nav-form>
-
-          <b-nav-item-dropdown text="Filter" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
     <FavouriteModal :title="favouriteModalTitle"></FavouriteModal>
-    <CreateAttribute :dropdownList="attributeList"></CreateAttribute>
     <CategoryModal :title="categoryModalTitle"></CategoryModal>
     <DeleteModal :title="deleteModalTitle"></DeleteModal>
   </div>
@@ -58,16 +53,10 @@
 
 <script>
 import FavouriteModal from "./modals/FavouriteModal";
-import CreateAttribute from "./modals/CreateAttribute";
 import CategoryModal from "./modals/CategoryModal";
 import DeleteModal from "../components/modals/DeleteModal";
 
 export default {
-  data() {
-    return {
-      attributeList: ["text", "number", "date", "enum"]
-    };
-  },
   computed: {
     categoryModalTitle() {
       return this.$store.state.categoryModal.title;
@@ -97,7 +86,6 @@ export default {
   },
   components: {
     FavouriteModal,
-    CreateAttribute,
     CategoryModal,
     DeleteModal
   }

@@ -26,13 +26,12 @@
 
 @media screen and (min-width: 575px) {
   .form-inline .form-control {
-    width: 8em;
+    width: 10em;
   }
 }
 @media screen and (max-width: 575px) {
   .form-inline .form-control {
-    width: 87%;
-    margin: auto;
+    width: 55%;
   }
 }
 .card-footer {
@@ -107,12 +106,15 @@ thead {
   color: white;
   background-color: #721c24;
 }
+.add-metadata-btn {
+  padding-right: 2em;
+}
 .favourite-form {
   width: 85%;
   margin: auto;
 }
 .new-metadata {
-  margin: auto;
+  justify-content: space-around;
 }
 .card {
   height: 200px;
@@ -164,9 +166,6 @@ thead {
 
 [aria-colindex="4"] {
   line-height: inherit;
-}
-.navbar-dark .navbar-brand {
-  margin-left: 2em;
 }
 .app-container {
   margin-top: 6em;
@@ -239,13 +238,6 @@ thead {
 
 /* MENU STYLES END */
 
-#attribute-table .table th,
-.table td {
-  padding-left: 1em;
-}
-#attribute-table th {
-  padding-left: 1em;
-}
 #delete-modal___BV_modal_body_ {
   color: red;
 }
@@ -263,4 +255,12 @@ thead {
 }
 .table.b-table th {
   padding-left: 1em;
+}
+.metadata-title {
+  text-align: center;
+  margin-bottom: 0em;
+}
+.custom-container {
+  width: 90%;
+  margin: auto;
 }
