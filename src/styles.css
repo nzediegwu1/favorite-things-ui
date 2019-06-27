@@ -85,12 +85,12 @@ thead {
 [aria-colindex="4"] {
   font-size: medium;
 }
-.btn-attributes {
+.btn-metadata {
   color: #721c24;
   background-color: #f8f9fa;
   border-color: #721c24;
 }
-.btn-attributes:hover {
+.btn-metadata:hover {
   background-color: #540109;
 }
 .form-buttons {
@@ -103,7 +103,7 @@ thead {
   color: white;
   background-color: #540109;
 }
-.add-attr-btn.btn-primary:hover {
+.add-metadata-btn.btn-primary:hover {
   color: white;
   background-color: #721c24;
 }
@@ -111,7 +111,7 @@ thead {
   width: 85%;
   margin: auto;
 }
-.new-attribute {
+.new-metadata {
   margin: auto;
 }
 .card {
@@ -170,14 +170,15 @@ thead {
 }
 .app-container {
   margin-top: 6em;
+  /* background-color: #b2b2b2; */
 }
 /* MENU STYLES */
 .bm-burger-button {
   position: fixed;
-  width: 2em;
-  height: 2em;
+  width: 1.5em;
+  height: 1.5em;
   left: 10px;
-  top: 17px;
+  top: 20px;
   cursor: pointer;
   z-index: 100000000;
 }
@@ -237,3 +238,29 @@ thead {
 }
 
 /* MENU STYLES END */
+
+#attribute-table .table th,
+.table td {
+  padding-left: 1em;
+}
+#attribute-table th {
+  padding-left: 1em;
+}
+#delete-modal___BV_modal_body_ {
+  color: red;
+}
+.log-control {
+  margin-bottom: 2em;
+  box-shadow: 5px 5px 5px grey;
+  background-color: #540109;
+  color: white;
+  padding: 1em;
+  text-align: left;
+}
+
+#favourites-table th {
+  padding: 1em;
+}
+.table.b-table th {
+  padding-left: 1em;
+}

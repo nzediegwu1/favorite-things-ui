@@ -9,13 +9,13 @@
     <b-button v-b-modal.add-attribute block variant="outline-primary">
       <i class="fa fa-plus">
         &nbsp;
-        <b>Attribute</b>
+        <b>Add Attribute</b>
       </i>
     </b-button>
-    <b-button block variant="outline-primary">
+    <b-button @click="gotoFavourites" block variant="outline-primary">
       <i class="fa fa-vcard">
         &nbsp;
-        <b>Attributes</b>
+        <b>View Attributes</b>
       </i>
     </b-button>
   </Slide>
@@ -29,6 +29,9 @@ export default {
   methods: {
     gotoHome() {
       this.$router.push("/");
+    },
+    gotoFavourites() {
+      this.$router.push("/attributes");
     }
   },
   data() {

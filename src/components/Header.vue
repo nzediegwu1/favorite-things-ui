@@ -9,7 +9,12 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item href="#">
-            <b-button v-b-modal.add-favourite class="nav-btn" variant="outline-primary">
+            <b-button
+              v-b-modal.favourite-modal
+              @click="setFavouriteModalState"
+              class="nav-btn"
+              variant="outline-primary"
+            >
               <i class="fa fa-plus"></i>
               {{ " " }}
               <i class="fa fa-heart"></i>
@@ -44,16 +49,18 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <AddFavourite></AddFavourite>
+    <FavouriteModal :title="favouriteModalTitle"></FavouriteModal>
     <CreateAttribute :dropdownList="attributeList"></CreateAttribute>
     <CategoryModal :title="categoryModalTitle"></CategoryModal>
+    <DeleteModal :title="deleteModalTitle"></DeleteModal>
   </div>
 </template>
 
 <script>
-import AddFavourite from "./modals/AddFavourite";
+import FavouriteModal from "./modals/FavouriteModal";
 import CreateAttribute from "./modals/CreateAttribute";
 import CategoryModal from "./modals/CategoryModal";
+import DeleteModal from "../components/modals/DeleteModal";
 
 export default {
   data() {
@@ -64,6 +71,12 @@ export default {
   computed: {
     categoryModalTitle() {
       return this.$store.state.categoryModal.title;
+    },
+    deleteModalTitle() {
+      return this.$store.state.deleteModal.title;
+    },
+    favouriteModalTitle() {
+      return this.$store.state.favouriteModal.title;
     }
   },
   methods: {
@@ -71,15 +84,22 @@ export default {
       this.$router.push("/");
     },
     setCategoryModalState() {
-      this.$store.commit("setCategoryModalState", {
+      this.$store.commit({
+        type: "setCategoryModalState",
         title: "Create category"
+      });
+    },
+    setFavouriteModalState() {
+      this.$store.commit("setFavouriteModalState", {
+        title: "Add Favourite"
       });
     }
   },
   components: {
-    AddFavourite,
+    FavouriteModal,
     CreateAttribute,
-    CategoryModal
+    CategoryModal,
+    DeleteModal
   }
 };
 </script>

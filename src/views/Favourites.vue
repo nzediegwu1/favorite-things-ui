@@ -3,36 +3,44 @@
     <div class="text-center">
       <b class="favourite-tag">Favourite {{ favouriteItem }}</b>
     </div>
-    <b-table outlined responsive striped hover :fields="fields" :items="items">
-      <template slot="attributes" slot-scope="data" v-html="data">
-        <b-button class="btn-attributes" v-b-modal.view-attributes>
+    <b-table id="favourites-table" outlined responsive striped hover :fields="fields" :items="items">
+      <template slot="metadata" slot-scope="data" v-html="data">
+        <b-button class="btn-metadata" v-b-modal.view-metadata>
           <i class="fa fa-info-circle"></i>
         </b-button>
       </template>
       <template slot="logs" slot-scope="data" v-html="data">
-        <b-button class="btn-attributes" v-b-modal.view-attributes>
-          <i class="fa fa-info-circle"></i>
+        <b-button class="btn-metadata" @click="gotoAuditLogs">
+          <i class="fa fa-book"></i>
         </b-button>
       </template>
 
       <template slot="manage" slot-scope="data" v-html="data">
-        <!-- `data.value` is the value after formatted by the Formatter -->
         <b-dropdown dropright text variant="primary">
-          <b-dropdown-item v-b-modal.edit-favourite href="#" class="edit-favourite">
+          <b-dropdown-item
+            @click="setFavouriteModalState"
+            v-b-modal.favourite-modal
+            href="#"
+            class="edit-favourite"
+          >
             <i class="fa fa-edit">&nbsp; Edit</i>
           </b-dropdown-item>
-          <b-dropdown-item v-b-modal.delete-favourite href="#">
+          <b-dropdown-item @click="setDeleteModalState" v-b-modal.delete-modal href="#">
             <i class="fa fa-trash">&nbsp; Delete</i>
           </b-dropdown-item>
         </b-dropdown>
-        <!-- <a :href="`#${data.value.replace(/[^a-z]+/i,'-').toLowerCase()}`">{{ data.value }}</a> -->
       </template>
     </b-table>
+    <Metadata></Metadata>
   </div>
 </template>
 
 <script>
+import Metadata from "../components/modals/Metadata";
 export default {
+  components: {
+    Metadata,
+  },
   data() {
     return {
       items: [
@@ -73,7 +81,7 @@ export default {
           key: "logs"
         },
         {
-          key: "attributes"
+          key: "metadata"
         },
         {
           key: "manage",
@@ -82,6 +90,21 @@ export default {
       ],
       favouriteItem: "Friends"
     };
+  },
+  methods: {
+    setDeleteModalState() {
+      this.$store.commit("setDeleteModalState", {
+        title: "Delete Favourite"
+      });
+    },
+    setFavouriteModalState() {
+      this.$store.commit("setFavouriteModalState", {
+        title: "Edit Favourite"
+      });
+    },
+    gotoAuditLogs() {
+      this.$router.push("/favouriteId/logs");
+    }
   }
 };
 </script>

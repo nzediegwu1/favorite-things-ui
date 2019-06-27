@@ -1,5 +1,5 @@
 <template>
-  <b-modal ref="add-favourite" hide-footer id="add-favourite" title="Add Favourite">
+  <b-modal ref="favourite-modal" hide-footer id="favourite-modal" :title="title">
     <b-form class="favourite-form" @submit="onSubmit" @reset="onReset">
       <b-form-group label="Title" label-for="title">
         <b-form-input
@@ -22,15 +22,14 @@
       <b-form-group label="Rank" label-for="rank">
         <b-form-input id="rank" v-model="form.rank" type="number" required></b-form-input>
       </b-form-group>
-      <!-- new attribute goes here -->
-      <div v-for="attribute in Array(form.attributes)" :key="attribute">
-        <AttributeObject :selected="form.selected" :dropdownList="form.options"></AttributeObject>
+      <div v-for="metadata in Array(form.metadata)" :key="metadata">
+        <MetadataItem :selected="form.selected" :dropdownList="form.options"></MetadataItem>
       </div>
 
-      <b-form-group label-for="add-attr-button">
-        <b-button id="add-attr-button" @click="addAttribute" class="add-attr-btn" variant="primary">
+      <b-form-group label-for="add-metadata-button">
+        <b-button id="add-metadata-button" @click="addMetadata" class="add-metadata-btn" variant="primary">
           <i class="fa fa-plus"></i>
-          Add attribute
+          Add metadata
         </b-button>
       </b-form-group>
 
@@ -42,7 +41,7 @@
   </b-modal>
 </template>
 <script>
-import AttributeObject from "../AttributeObject";
+import MetadataItem from "../MetadataItem";
 export default {
   data() {
     return {
@@ -52,18 +51,19 @@ export default {
         rank: null,
         selected: null,
         options: [
-          { value: null, text: "Select a value" },
-          { value: "a", text: "This is First option" },
-          { value: "b", text: "Selected Option" },
-          { value: { C: "3PO" }, text: "This is an option with object value" },
-          { value: "d", text: "This one is disabled", disabled: true }
+          { value: null, text: "Select attribute" },
+          { value: "color", text: "Color" },
+          { value: "gender", text: "Gender" },
+          { value: 'weight', text: "Weight" },
+          { value: "date", text: "Date Purchased" }
         ],
-        attributes: 0
+        metadata: 0
       }
     };
   },
+  props: ["title"],
   components: {
-    AttributeObject
+    MetadataItem
   },
   methods: {
     onSubmit(evt) {
@@ -71,7 +71,7 @@ export default {
       alert(JSON.stringify(this.form));
     },
     hideModal() {
-      this.$refs["add-favourite"].hide();
+      this.$refs["favourite-modal"].hide();
     },
     onReset(evt) {
       evt.preventDefault();
@@ -79,8 +79,8 @@ export default {
       this.form.description = "";
       this.form.rank = null;
     },
-    addAttribute() {
-      this.form.attributes++;
+    addMetadata() {
+      this.form.metadata++;
     }
   }
 };
