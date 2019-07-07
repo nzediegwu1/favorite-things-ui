@@ -13,6 +13,13 @@ export default new Vuex.Store({
     },
     favouriteModal: {
       title: ""
+    },
+    categories: [],
+    singleCategory: {
+      id: null,
+      name: "",
+      count: 0,
+      favourites: []
     }
   },
   mutations: {
@@ -24,6 +31,12 @@ export default new Vuex.Store({
     },
     setFavouriteModalState(state, payload) {
       state.favouriteModal = payload;
+    },
+    setCategories(state, payload) {
+      state.categories = payload;
+    },
+    setSingleCategory(state, payload) {
+      state.singleCategory = payload;
     }
   },
   actions: {}

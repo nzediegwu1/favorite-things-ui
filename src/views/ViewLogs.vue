@@ -13,7 +13,7 @@ export default {
   components: { ContentHeader },
   methods: {
     gotoFavourites() {
-      this.$router.push("/favourites");
+      this.$router.go(-1);
     }
   },
   data() {

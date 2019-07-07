@@ -1,7 +1,10 @@
 <template>
   <div class="custom-container">
     <div class="text-center">
-      <ContentHeader :goback="gotoHome" :headerText="headerText"></ContentHeader>
+      <ContentHeader
+        :goback="gotoHome"
+        :headerText="`Favourite ${singleCategory.name.toLowerCase()}`"
+      ></ContentHeader>
     </div>
     <b-table
       id="favourites-table"
@@ -10,13 +13,23 @@
       striped
       hover
       :fields="fields"
-      :items="items"
+      :items="favouriteList"
     >
       <template slot="metadata" slot-scope="data" v-html="data">
         <b-button class="btn-metadata" v-b-modal.view-metadata>
           <i class="fa fa-info-circle"></i>
         </b-button>
       </template>
+      <template slot="title" slot-scope="data">
+        <p v-b-popover.hover.bottom="data.item.title">{{generateContent(data.item.title, 17)}}</p>
+      </template>
+
+      <template slot="description" slot-scope="data">
+        <p
+          v-b-popover.hover.bottom="data.item.description"
+        >{{generateContent(data.item.description, 23)}}</p>
+      </template>
+
       <template slot="logs" slot-scope="data" v-html="data">
         <b-button class="btn-metadata" @click="gotoAuditLogs">
           <i class="fa fa-book"></i>
@@ -44,38 +57,32 @@
 </template>
 
 <script>
+import axios from "axios";
 import Metadata from "../components/modals/Metadata";
 import ContentHeader from "../components/ContentHeader";
 
+axios.defaults.baseURL = "http://localhost:8000";
+
 export default {
+  mounted() {
+    axios.get(`/categories/${this.$route.params.id}`).then(({ data }) => {
+      this.$store.commit("setSingleCategory", data);
+    });
+  },
+  computed: {
+    singleCategory() {
+      return this.$store.state.singleCategory;
+    },
+    favouriteList() {
+      return this.singleCategory.favourites;
+    }
+  },
   components: {
     Metadata,
     ContentHeader
   },
   data() {
     return {
-      items: [
-        {
-          ranking: 40,
-          title: "Dickerson",
-          description: "The guy who made me believe in myself"
-        },
-        {
-          ranking: 21,
-          title: "Larsen",
-          description: "My childhood friend since day 1"
-        },
-        {
-          ranking: 89,
-          title: "Victor",
-          description: "The software engineer who mentored me in my early days"
-        },
-        {
-          ranking: 38,
-          title: "Jami",
-          description: "My gist buddy. Very smart dude"
-        }
-      ],
       fields: [
         {
           key: "ranking",
@@ -98,8 +105,7 @@ export default {
           key: "manage",
           label: "⚙️"
         }
-      ],
-      headerText: `Favourite friends`
+      ]
     };
   },
   methods: {
@@ -114,10 +120,13 @@ export default {
       });
     },
     gotoAuditLogs() {
-      this.$router.push("/favouriteId/logs");
+      this.$router.push(`/favourites/${1}/logs`);
     },
     gotoHome() {
       this.$router.push("/");
+    },
+    generateContent(item, length) {
+      return item.length <= length ? item : `${item.slice(0, length)}...`;
     }
   }
 };

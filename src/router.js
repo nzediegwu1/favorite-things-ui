@@ -16,12 +16,12 @@ export default new Router({
       component: Home
     },
     {
-      path: "/favourites",
+      path: "/categories/:id",
       name: "favourites",
       component: FavouriteList
     },
     {
-      path: "/favouriteId/logs",
+      path: "/favourites/:id/logs",
       name: "audit-log",
       component: ViewLogs
     }
