@@ -1,20 +1,20 @@
 <template>
-  <div class="row new-metadata">
+  <div  class="row new-metadata">
     <b-form-input placeholder="name" class="col-3" type="text"></b-form-input>
-    <b-form-select v-model="isSelected" class="col-3" :options="dropdownList"></b-form-select>
-    <b-form-input placeholder="value" class="col-3" type="text"></b-form-input>
-    <b-button class="add-metadata-btn col-1" variant="primary">
-      <i class="fa fa-send"></i>
-    </b-button>
+    <b-form-select v-model="selected" class="col-3" :options="dropdownList"></b-form-select>
+    <b-input-group class="col-5">
+      <b-form-input placeholder="value" :type="selected"></b-form-input>
+      <b-input-group-append>
+        <b-button class="btn-metadata" variant="secondary">
+          <i class="fa fa-check"></i>
+        </b-button>
+      </b-input-group-append>
+    </b-input-group>
   </div>
 </template>
 <script>
 export default {
-  props: ["dropdownList", "selected", ],
-  data() {
-    return {
-      isSelected: this.$props.selected
-    };
-  }
+  props: ["dropdownList", "selected"],
+  
 };
 </script>

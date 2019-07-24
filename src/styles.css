@@ -92,6 +92,10 @@ thead {
 .btn-metadata:hover {
   background-color: #540109;
 }
+.btn-metadata:hover .fa-trash {
+  color: white;
+}
+
 .form-buttons {
   float: right;
 }
@@ -110,11 +114,17 @@ thead {
   padding-right: 2em;
 }
 .favourite-form {
-  width: 85%;
+  width: 88%;
   margin: auto;
 }
 .new-metadata {
-  justify-content: space-around;
+  justify-content: space-between;
+  background-color: #dee2e6;
+  padding: 0.4em;
+}
+.new-metadata.row {
+  margin-right: auto;
+  margin-left: auto;
 }
 .card {
   height: 200px;
@@ -278,4 +288,15 @@ thead {
 .btn-outline-secondary:hover {
   background-color: #721c24;
   color: white;
+}
+.input-group.col-5 {
+  padding: 0em;
+}
+
+#favourite-modal .modal-body {
+  padding: 1em 0.3em 1em 0em;
+}
+
+.favourite-form .row {
+  margin-right: unset;
 }
