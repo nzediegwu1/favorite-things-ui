@@ -35,6 +35,9 @@ export default new Vuex.Store({
     setCategories(state, payload) {
       state.categories = payload;
     },
+    addCategory(state, payload) {
+      state.categories.unshift(payload);
+    },
     setSingleCategory(state, payload) {
       state.singleCategory = payload;
     }

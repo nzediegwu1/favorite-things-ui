@@ -41,16 +41,7 @@
       <b-form-group class="metadata-title">
         <label for="metadata">Metadata</label>
       </b-form-group>
-      <b-form-group id="metadata">
-        <AddMetadata :selected="form.defaultType" :dropdownList="form.options"></AddMetadata>
-        <b-table outlined responsive striped hover :fields="fields" :items="items">
-          <template slot="del" slot-scope="data" v-html="data">
-            <b-button class="btn-metadata">
-              <i class="fa fa-trash"></i>
-            </b-button>
-          </template>
-        </b-table>
-      </b-form-group>
+      <HandleMetadata></HandleMetadata>
       <div class="form-buttons">
         <b-button class="cancel-form" variant="primary" type="reset" @click="hideModal">Cancel</b-button>
         <b-button type="submit" class="btn-favourite">Submit</b-button>
@@ -59,60 +50,22 @@
   </b-modal>
 </template>
 <script>
-import AddMetadata from "../AddMetadata";
+import HandleMetadata from "../HandleMetadata";
 export default {
-  components: { AddMetadata },
+  components: { HandleMetadata },
   data() {
     return {
-      items: [
-        {
-          name: "Color",
-          value: "Red"
-        },
-        {
-          name: "Gender",
-          value: "Male"
-        },
-        {
-          name: "Weight",
-          value: "1.5kg"
-        },
-        {
-          name: "DatePurchased",
-          value: "23rd March, 2019"
-        }
-      ],
-      fields: [
-        {
-          key: "name",
-          sortable: true
-        },
-        {
-          key: "value",
-          sortable: true
-        },
-        {
-          key: "del"
-        }
-      ],
       form: {
         title: "",
         description: "",
         rank: null,
         selected: null,
-        defaultType: "text",
         dropdownList: [
           { value: null, text: "Select category" },
           { value: "people", text: "People" },
           { value: "books", text: "Books" },
           { value: "Movies", text: "Movies" },
           { value: "food", text: "Food" }
-        ],
-        options: [
-          { value: "text", text: "Text" },
-          { value: "number", text: "Number" },
-          { value: "date", text: "Date" },
-          { value: "enum", text: "Enum" }
         ]
       }
     };

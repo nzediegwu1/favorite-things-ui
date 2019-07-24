@@ -14,6 +14,7 @@
       hover
       :fields="fields"
       :items="favouriteList"
+      v-if="favouriteList.length"
     >
       <template slot="metadata" slot-scope="data" v-html="data">
         <b-button class="btn-metadata" v-b-modal.view-metadata>
@@ -52,13 +53,19 @@
         </b-dropdown>
       </template>
     </b-table>
-    <Metadata></Metadata>
+    <div v-else>
+      <b-jumbotron
+        header="No favourite found"
+        lead="You have not added any favourite to this category"
+      ></b-jumbotron>
+    </div>
+    <ViewMetadata></ViewMetadata>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Metadata from "../components/modals/Metadata";
+import ViewMetadata from "../components/modals/ViewMetadata";
 import ContentHeader from "../components/ContentHeader";
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -78,7 +85,7 @@ export default {
     }
   },
   components: {
-    Metadata,
+    ViewMetadata,
     ContentHeader
   },
   data() {

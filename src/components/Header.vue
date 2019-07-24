@@ -46,16 +46,25 @@
       </b-collapse>
     </b-navbar>
     <FavouriteModal :title="favouriteModalTitle"></FavouriteModal>
-    <CategoryModal :title="categoryModalTitle"></CategoryModal>
+    <CategoryModal :saveCategory="createCategory" :title="categoryModalTitle"></CategoryModal>
     <DeleteModal :title="deleteModalTitle"></DeleteModal>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import toastr from 'toastr'
 import FavouriteModal from "./modals/FavouriteModal";
 import CategoryModal from "./modals/CategoryModal";
 import DeleteModal from "../components/modals/DeleteModal";
+import { categorySchema } from "../schemas";
+import { handleErrors } from "../helpers";
 
+axios.defaults.baseURL = "http://localhost:8000";
+const validateOption = {
+  abortEarly: false,
+  strict: true
+};
 export default {
   computed: {
     categoryModalTitle() {
@@ -82,6 +91,16 @@ export default {
       this.$store.commit("setFavouriteModalState", {
         title: "Add Favourite"
       });
+    },
+    async createCategory(name) {
+      try {
+        await categorySchema.validate({ name }, validateOption);
+        const { data } = await axios.post("/categories", { name });
+        this.$store.commit("addCategory", data);
+        toastr.success(`Successfully created category: ${data.name}`);
+      } catch (error) {
+        handleErrors(error);
+      }
     }
   },
   components: {

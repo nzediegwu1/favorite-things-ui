@@ -300,3 +300,11 @@ thead {
 .favourite-form .row {
   margin-right: unset;
 }
+
+#metadata .table-responsive {
+  overflow-y: auto;
+  max-height: 18em;
+}
+.jumbotron {
+  text-align: center;
+}
