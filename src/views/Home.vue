@@ -16,7 +16,7 @@
                 <b-button size="sm" variant="outline-primary">{{category.count}} Favourites</b-button>
               </router-link>
               <b-button
-                @click="setCategoryModalState"
+                @click="()=>setCategoryModalState({id: category.id, name: category.name})"
                 v-b-modal.category-modal
                 size="sm"
                 href="#"
@@ -42,6 +42,10 @@
 </template>
 <script>
 import axios from "axios";
+import toastr from "toastr";
+import { categorySchema, validateOption } from "../schemas";
+import { handleErrors } from "../helpers";
+
 axios.defaults.baseURL = "http://localhost:8000";
 
 export default {
@@ -59,10 +63,23 @@ export default {
     return {};
   },
   methods: {
-    setCategoryModalState() {
+    setCategoryModalState({ name, id }) {
       this.$store.commit("setCategoryModalState", {
-        title: "Edit category"
+        title: "Edit category",
+        defaultVal: name,
+        submitFunc: this.updateCategoery,
+        id: id
       });
+    },
+    async updateCategoery({ name, id }) {
+      try {
+        await categorySchema.validate({ name }, validateOption);
+        const { data } = await axios.put(`/categories/${id}`, { name });
+        this.$store.commit("updateCategory", data);
+        toastr.success(`Successfully updated category: ${data.name}`);
+      } catch (error) {
+        return handleErrors(error);
+      }
     },
     setDeleteModalState() {
       this.$store.commit("setDeleteModalState", {

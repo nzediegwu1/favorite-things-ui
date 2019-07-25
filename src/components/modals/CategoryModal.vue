@@ -1,9 +1,9 @@
 <template>
-  <b-modal ref="category-modal" id="category-modal" hide-footer :title="title">
+  <b-modal ref="category-modal" id="category-modal" hide-footer :title="props.title">
     <b-form @submit="handleSubmit" class="favourite-form">
       <b-form-group label="Name" label-for="groupName">
         <b-form-input
-          v-model="categoryName"
+          v-model="props.defaultVal"
           type="text"
           required
           placeholder="Enter name of the category"
@@ -18,19 +18,16 @@
 </template>
 <script>
 export default {
-  props: ["title", "saveCategory"],
-  data() {
-    return {
-      categoryName: ""
-    };
-  },
+  props: ["props"],
   methods: {
     hideModal() {
       this.$refs["category-modal"].hide();
     },
-    handleSubmit(e) {
+    async handleSubmit(e) {
       e.preventDefault();
-      this.saveCategory(this.categoryName);
+      const { defaultVal, id } = this.props;
+      const submitError = await this.props.submitFunc({ name: defaultVal, id });
+      if (!submitError) this.hideModal();
     }
   }
 };

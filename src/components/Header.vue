@@ -46,29 +46,25 @@
       </b-collapse>
     </b-navbar>
     <FavouriteModal :title="favouriteModalTitle"></FavouriteModal>
-    <CategoryModal :saveCategory="createCategory" :title="categoryModalTitle"></CategoryModal>
+    <CategoryModal :props="categoryModalProps"></CategoryModal>
     <DeleteModal :title="deleteModalTitle"></DeleteModal>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import toastr from 'toastr'
+import toastr from "toastr";
 import FavouriteModal from "./modals/FavouriteModal";
 import CategoryModal from "./modals/CategoryModal";
 import DeleteModal from "../components/modals/DeleteModal";
-import { categorySchema } from "../schemas";
+import { categorySchema, validateOption } from "../schemas";
 import { handleErrors } from "../helpers";
 
 axios.defaults.baseURL = "http://localhost:8000";
-const validateOption = {
-  abortEarly: false,
-  strict: true
-};
 export default {
   computed: {
-    categoryModalTitle() {
-      return this.$store.state.categoryModal.title;
+    categoryModalProps() {
+      return this.$store.state.categoryModal;
     },
     deleteModalTitle() {
       return this.$store.state.deleteModal.title;
@@ -82,9 +78,11 @@ export default {
       this.$router.push("/");
     },
     setCategoryModalState() {
-      this.$store.commit({
-        type: "setCategoryModalState",
-        title: "Create category"
+      this.$store.commit("setCategoryModalState", {
+        title: "Create category",
+        submitFunc: this.createCategory,
+        defaultVal: "",
+        id: null
       });
     },
     setFavouriteModalState() {
@@ -92,14 +90,14 @@ export default {
         title: "Add Favourite"
       });
     },
-    async createCategory(name) {
+    async createCategory({ name }) {
       try {
         await categorySchema.validate({ name }, validateOption);
         const { data } = await axios.post("/categories", { name });
         this.$store.commit("addCategory", data);
         toastr.success(`Successfully created category: ${data.name}`);
       } catch (error) {
-        handleErrors(error);
+        return handleErrors(error);
       }
     }
   },

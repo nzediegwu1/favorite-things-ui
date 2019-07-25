@@ -6,7 +6,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     categoryModal: {
-      title: ""
+      title: "",
+      submitFunc: null,
+      defaultVal: "",
+      id: null
     },
     deleteModal: {
       title: ""
@@ -37,6 +40,10 @@ export default new Vuex.Store({
     },
     addCategory(state, payload) {
       state.categories.unshift(payload);
+    },
+    updateCategory(state, payload) {
+      const index = state.categories.findIndex(item => item.id === payload.id);
+      state.categories.splice(index, 1, payload);
     },
     setSingleCategory(state, payload) {
       state.singleCategory = payload;

@@ -139,7 +139,7 @@ thead {
   margin-top: 1em;
 }
 .col {
-  margin-bottom: 9em;
+  margin-bottom: 10.5em;
 }
 @media screen and (max-width: 575px) and (min-width: 490px) {
   .col {
