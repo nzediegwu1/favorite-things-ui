@@ -6,19 +6,19 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     categoryModal: {
-      title: "",
-      submitFunc: null,
-      defaultVal: "",
+      modalTitle: "",
+      handleSubmit: null,
+      name: "",
       id: null
     },
     deleteModal: {
-      title: "",
+      modalTitle: "",
       handleDelete: null,
       name: "",
       id: null
     },
     favouriteModal: {
-      title: ""
+      modalTitle: ""
     },
     categories: [],
     singleCategory: {

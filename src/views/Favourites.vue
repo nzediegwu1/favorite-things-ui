@@ -122,7 +122,7 @@ export default {
   methods: {
     setDeleteModalState(name, id) {
       this.$store.commit("setDeleteModalState", {
-        title: "Delete Favourite",
+        modalTitle: "Delete Favourite",
         name,
         id,
         handleDelete: this.deleteFavourite
@@ -139,7 +139,7 @@ export default {
     },
     setFavouriteModalState() {
       this.$store.commit("setFavouriteModalState", {
-        title: "Edit Favourite"
+        modalTitle: "Edit Favourite"
       });
     },
     gotoAuditLogs() {

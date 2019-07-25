@@ -70,7 +70,7 @@ export default {
       return this.$store.state.deleteModal;
     },
     favouriteModalTitle() {
-      return this.$store.state.favouriteModal.title;
+      return this.$store.state.favouriteModal.modalTitle;
     }
   },
   methods: {
@@ -79,15 +79,15 @@ export default {
     },
     setCategoryModalState() {
       this.$store.commit("setCategoryModalState", {
-        title: "Create category",
-        submitFunc: this.createCategory,
-        defaultVal: "",
+        modalTitle: "Create category",
+        handleSubmit: this.createCategory,
+        name: "",
         id: null
       });
     },
     setFavouriteModalState() {
       this.$store.commit("setFavouriteModalState", {
-        title: "Add Favourite"
+        modalTitle: "Add Favourite"
       });
     },
     async createCategory({ name }) {

@@ -1,10 +1,18 @@
 import { object, string } from "yup";
 
-export const categorySchema = object().shape({
-  name: string()
+const shortText = field =>
+  string()
     .trim()
-    .min(2, "name should be 2 or more characters")
-    .max(30, "name should not be more than 30 characters")
+    .min(1, `${field} should be 1 or more characters`)
+    .max(30, `${field} should not be more than 30 characters`);
+
+export const categorySchema = object().shape({
+  name: shortText("name")
+});
+
+export const metadataSchema = object().shape({
+  name: shortText("name"),
+  value: shortText("value")
 });
 
 export const validateOption = {

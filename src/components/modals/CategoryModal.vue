@@ -1,9 +1,9 @@
 <template>
-  <b-modal ref="category-modal" id="category-modal" hide-footer :title="props.title">
+  <b-modal ref="category-modal" id="category-modal" hide-footer :title="props.modalTitle">
     <b-form @submit="handleSubmit" class="favourite-form">
       <b-form-group label="Name" label-for="groupName">
         <b-form-input
-          v-model="props.defaultVal"
+          v-model="props.name"
           type="text"
           required
           placeholder="Enter name of the category"
@@ -25,8 +25,8 @@ export default {
     },
     async handleSubmit(e) {
       e.preventDefault();
-      const { defaultVal, id } = this.props;
-      const submitError = await this.props.submitFunc({ name: defaultVal, id });
+      const { name, id } = this.props;
+      const submitError = await this.props.handleSubmit({ name, id });
       if (!submitError) this.hideModal();
     }
   }

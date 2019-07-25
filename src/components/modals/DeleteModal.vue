@@ -3,7 +3,7 @@
     @ok="()=>handleOk(props.name, props.id)"
     ref="delete-modal"
     id="delete-modal"
-    :title="props.title"
+    :title="props.modalTitle"
   >
     <h6 class="my-4">{{`Are you sure you want to delete ${props.name}?`}}</h6>
     <div class="form-buttons"></div>

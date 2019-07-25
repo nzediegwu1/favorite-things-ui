@@ -68,9 +68,9 @@ export default {
   methods: {
     setCategoryModalState({ name, id }) {
       this.$store.commit("setCategoryModalState", {
-        title: "Edit category",
-        defaultVal: name,
-        submitFunc: this.updateCategoery,
+        modalTitle: "Edit category",
+        name,
+        handleSubmit: this.updateCategoery,
         id: id
       });
     },
@@ -98,7 +98,7 @@ export default {
     },
     setDeleteModalState(name, id) {
       this.$store.commit("setDeleteModalState", {
-        title: "Delete category",
+        modalTitle: "Delete category",
         name,
         id,
         handleDelete: this.deleteCategory

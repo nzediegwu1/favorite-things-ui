@@ -14,7 +14,7 @@
     </div>
     <b-table v-if="items.length" outlined responsive striped hover :fields="fields" :items="items">
       <template slot="del" slot-scope="data" v-html="data">
-        <b-button class="btn-metadata">
+        <b-button @click="()=>removeMetadata(data.index)" class="btn-metadata">
           <i class="fa fa-trash"></i>
         </b-button>
       </template>
@@ -23,14 +23,26 @@
   </b-form-group>
 </template>
 <script>
+import { metadataSchema, validateOption } from "../schemas";
+import { handleErrors } from "../helpers";
+
 export default {
   methods: {
-    addItem() {
-      this.items.push({
-        name: this.name,
-        type: this.selected,
-        value: this.value
-      });
+    removeMetadata(id) {
+      this.items = this.items.filter((item, index) => index !== id);
+    },
+    async addItem() {
+      try {
+        const newMetadata = {
+          name: this.name,
+          type: this.selected,
+          value: this.value
+        };
+        await metadataSchema.validate(newMetadata, validateOption);
+        this.items.push(newMetadata);
+      } catch (error) {
+        handleErrors(error);
+      }
     }
   },
   data() {
