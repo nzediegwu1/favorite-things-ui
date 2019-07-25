@@ -47,7 +47,7 @@
     </b-navbar>
     <FavouriteModal :title="favouriteModalTitle"></FavouriteModal>
     <CategoryModal :props="categoryModalProps"></CategoryModal>
-    <DeleteModal :title="deleteModalTitle"></DeleteModal>
+    <DeleteModal :props="deleteModalProps"></DeleteModal>
   </div>
 </template>
 
@@ -66,8 +66,8 @@ export default {
     categoryModalProps() {
       return this.$store.state.categoryModal;
     },
-    deleteModalTitle() {
-      return this.$store.state.deleteModal.title;
+    deleteModalProps() {
+      return this.$store.state.deleteModal;
     },
     favouriteModalTitle() {
       return this.$store.state.favouriteModal.title;

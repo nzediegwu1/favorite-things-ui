@@ -308,3 +308,6 @@ thead {
 .jumbotron {
   text-align: center;
 }
+.logs:hover {
+  color: #540109;
+}

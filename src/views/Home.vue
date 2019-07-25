@@ -15,6 +15,9 @@
               <router-link :to="`/categories/${category.id}`">
                 <b-button size="sm" variant="outline-primary">{{category.count}} Favourites</b-button>
               </router-link>
+              <b-button class="logs" size="sm" href="#" variant="primary" @click="gotoAuditLogs">
+                <i class="fa fa-book"></i>
+              </b-button>
               <b-button
                 @click="()=>setCategoryModalState({id: category.id, name: category.name})"
                 v-b-modal.category-modal
@@ -25,7 +28,7 @@
                 <i class="fa fa-edit"></i>
               </b-button>
               <b-button
-                @click="setDeleteModalState"
+                @click="()=>setDeleteModalState(category.name, category.id)"
                 v-b-modal.delete-modal
                 size="sm"
                 href="#"
@@ -71,6 +74,9 @@ export default {
         id: id
       });
     },
+    gotoAuditLogs() {
+      this.$router.push(`/favourites/${1}/logs`);
+    },
     async updateCategoery({ name, id }) {
       try {
         await categorySchema.validate({ name }, validateOption);
@@ -81,9 +87,21 @@ export default {
         return handleErrors(error);
       }
     },
-    setDeleteModalState() {
+    async deleteCategory(name, id) {
+      try {
+        await axios.delete(`/categories/${id}`);
+        this.$store.commit("deleteCategory", { id });
+        toastr.success(`Successfully deleted: ${name}`, "Category");
+      } catch (error) {
+        return handleErrors(error);
+      }
+    },
+    setDeleteModalState(name, id) {
       this.$store.commit("setDeleteModalState", {
-        title: "Delete category"
+        title: "Delete category",
+        name,
+        id,
+        handleDelete: this.deleteCategory
       });
     }
   }

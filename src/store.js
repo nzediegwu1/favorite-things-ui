@@ -12,7 +12,10 @@ export default new Vuex.Store({
       id: null
     },
     deleteModal: {
-      title: ""
+      title: "",
+      handleDelete: null,
+      name: "",
+      id: null
     },
     favouriteModal: {
       title: ""
@@ -44,6 +47,14 @@ export default new Vuex.Store({
     updateCategory(state, payload) {
       const index = state.categories.findIndex(item => item.id === payload.id);
       state.categories.splice(index, 1, payload);
+    },
+    deleteCategory(state, { id }) {
+      state.categories = state.categories.filter(item => item.id !== id);
+    },
+    deleteFavourite(state, { id }) {
+      state.singleCategory.favourites = state.singleCategory.favourites.filter(
+        item => item.id !== id
+      );
     },
     setSingleCategory(state, payload) {
       state.singleCategory = payload;

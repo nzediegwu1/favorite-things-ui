@@ -47,7 +47,11 @@
           >
             <i class="fa fa-edit">&nbsp; Edit</i>
           </b-dropdown-item>
-          <b-dropdown-item @click="setDeleteModalState" v-b-modal.delete-modal href="#">
+          <b-dropdown-item
+            @click="()=>setDeleteModalState(data.item.title, data.item.id)"
+            v-b-modal.delete-modal
+            href="#"
+          >
             <i class="fa fa-trash">&nbsp; Delete</i>
           </b-dropdown-item>
         </b-dropdown>
@@ -116,10 +120,22 @@ export default {
     };
   },
   methods: {
-    setDeleteModalState() {
+    setDeleteModalState(name, id) {
       this.$store.commit("setDeleteModalState", {
-        title: "Delete Favourite"
+        title: "Delete Favourite",
+        name,
+        id,
+        handleDelete: this.deleteFavourite
       });
+    },
+    async deleteFavourite(name, id) {
+      try {
+        await axios.delete(`/favourites/${id}`);
+        this.$store.commit("deleteFavourite", { id });
+        toastr.success(`Successfully deleted: ${name}`, "Favourite");
+      } catch (error) {
+        return handleErrors(error);
+      }
     },
     setFavouriteModalState() {
       this.$store.commit("setFavouriteModalState", {
