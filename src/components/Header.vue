@@ -45,7 +45,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <FavouriteModal :title="favouriteModalTitle"></FavouriteModal>
+    <FavouriteModal :props="favouriteModalProps"></FavouriteModal>
     <CategoryModal :props="categoryModalProps"></CategoryModal>
     <DeleteModal :props="deleteModalProps"></DeleteModal>
   </div>
@@ -69,8 +69,14 @@ export default {
     deleteModalProps() {
       return this.$store.state.deleteModal;
     },
-    favouriteModalTitle() {
-      return this.$store.state.favouriteModal.modalTitle;
+    favouriteModalProps() {
+      return this.$store.state.favouriteModal;
+    },
+    getCategoryList() {
+      return this.$store.state.categories.map(item => ({
+        value: item.id,
+        text: item.name
+      }));
     }
   },
   methods: {
@@ -87,7 +93,12 @@ export default {
     },
     setFavouriteModalState() {
       this.$store.commit("setFavouriteModalState", {
-        modalTitle: "Add Favourite"
+        modalTitle: "Add Favourite",
+        title: "",
+        description: "",
+        ranking: null,
+        category: this.getCategoryList[0].value,
+        categoryList: this.getCategoryList
       });
     },
     async createCategory({ name }) {

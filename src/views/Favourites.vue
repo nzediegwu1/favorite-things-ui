@@ -16,11 +16,6 @@
       :items="favouriteList"
       v-if="favouriteList.length"
     >
-      <template slot="metadata" slot-scope="data" v-html="data">
-        <b-button class="btn-metadata" v-b-modal.view-metadata>
-          <i class="fa fa-info-circle"></i>
-        </b-button>
-      </template>
       <template slot="title" slot-scope="data">
         <p v-b-popover.hover.bottom="data.item.title">{{generateContent(data.item.title, 17)}}</p>
       </template>
@@ -37,10 +32,20 @@
         </b-button>
       </template>
 
+      <template slot="metadata" slot-scope="data" v-html="data">
+        <b-button
+          class="btn-metadata"
+          v-b-modal.view-metadata
+          @click="()=>setMetadata(data.item.metadata)"
+        >
+          <i class="fa fa-info-circle"></i>
+        </b-button>
+      </template>
+
       <template slot="manage" slot-scope="data" v-html="data">
         <b-dropdown dropright text variant="primary">
           <b-dropdown-item
-            @click="setFavouriteModalState"
+            @click="()=>setFavouriteModalState(data.item)"
             v-b-modal.favourite-modal
             href="#"
             class="edit-favourite"
@@ -63,7 +68,11 @@
         lead="You have not added any favourite to this category"
       ></b-jumbotron>
     </div>
-    <ViewMetadata></ViewMetadata>
+    <ViewMetadata
+      :removeMetadata="removeMetadata"
+      :addMetadata="addMetadata"
+      :content="metadataContent"
+    ></ViewMetadata>
   </div>
 </template>
 
@@ -71,6 +80,8 @@
 import axios from "axios";
 import ViewMetadata from "../components/modals/ViewMetadata";
 import ContentHeader from "../components/ContentHeader";
+import { metadataSchema, validateOption } from "../schemas";
+import { handleErrors } from "../helpers";
 
 axios.defaults.baseURL = "http://localhost:8000";
 
@@ -84,8 +95,17 @@ export default {
     singleCategory() {
       return this.$store.state.singleCategory;
     },
+    metadataContent() {
+      return this.$store.state.metadata;
+    },
     favouriteList() {
       return this.singleCategory.favourites;
+    },
+    getCategoryList() {
+      return this.$store.state.categories.map(item => ({
+        value: item.id,
+        text: item.name
+      }));
     }
   },
   components: {
@@ -120,6 +140,24 @@ export default {
     };
   },
   methods: {
+    removeMetadata(items, id) {
+      // make delete request for the metadata
+      items.splice(id, 1);
+    },
+    async addMetadata(items, name, selected, value) {
+      try {
+        const newMetadata = {
+          name,
+          type: selected,
+          value
+        };
+        await metadataSchema.validate(newMetadata, validateOption);
+        // make a post request for the metadata
+        items.push(newMetadata);
+      } catch (error) {
+        handleErrors(error);
+      }
+    },
     setDeleteModalState(name, id) {
       this.$store.commit("setDeleteModalState", {
         modalTitle: "Delete Favourite",
@@ -127,6 +165,9 @@ export default {
         id,
         handleDelete: this.deleteFavourite
       });
+    },
+    setMetadata(metadata) {
+      this.$store.commit("setMetadata", metadata);
     },
     async deleteFavourite(name, id) {
       try {
@@ -137,9 +178,14 @@ export default {
         return handleErrors(error);
       }
     },
-    setFavouriteModalState() {
+    setFavouriteModalState({ title, description, ranking, category }) {
       this.$store.commit("setFavouriteModalState", {
-        modalTitle: "Edit Favourite"
+        modalTitle: "Edit Favourite",
+        title,
+        description,
+        ranking,
+        category,
+        categoryList: this.getCategoryList
       });
     },
     gotoAuditLogs() {

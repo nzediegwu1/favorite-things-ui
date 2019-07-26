@@ -1,13 +1,13 @@
 <template>
-  <b-modal ref="favourite-modal" hide-footer id="favourite-modal" :title="title">
-    <b-form class="favourite-form" @submit="onSubmit" @reset="onReset">
+  <b-modal ref="favourite-modal" hide-footer id="favourite-modal" :title="props.modalTitle">
+    <b-form class="favourite-form" @submit="onSubmit">
       <b-form-group>
         <div class="row">
           <label class="col-3" for="title">Title</label>
           <b-form-input
             id="title"
             class="col-9"
-            v-model="form.title"
+            v-model="props.title"
             type="text"
             required
             placeholder="Title of your favourite"
@@ -19,7 +19,7 @@
           <label class="col-3" for="description">Desc</label>
           <b-form-textarea
             class="col-9"
-            v-model="form.description"
+            v-model="props.description"
             placeholder="Describe your favourite"
             rows="3"
             max-rows="6"
@@ -29,19 +29,19 @@
       <b-form-group>
         <div class="row">
           <label class="col-3" for="rank">Rank</label>
-          <b-form-input class="col-9" id="rank" v-model="form.rank" type="number" required></b-form-input>
+          <b-form-input class="col-9" id="rank" v-model="props.ranking" type="number" required></b-form-input>
         </div>
       </b-form-group>
       <b-form-group>
         <div class="row">
           <label class="col-3" for="rank">Cat.</label>
-          <b-form-select class="col-9" v-model="form.selected" :options="form.dropdownList"></b-form-select>
+          <b-form-select class="col-9" v-model="props.category" :options="props.categoryList"></b-form-select>
         </div>
       </b-form-group>
       <b-form-group class="metadata-title">
         <label for="metadata">Metadata</label>
       </b-form-group>
-      <HandleMetadata></HandleMetadata>
+      <HandleMetadata :content="[]" :removeMetadata="removeMetadata" :addMetadata="addMetadata"></HandleMetadata>
       <div class="form-buttons">
         <b-button class="cancel-form" variant="primary" type="reset" @click="hideModal">Cancel</b-button>
         <b-button type="submit" class="btn-favourite">Submit</b-button>
@@ -51,26 +51,12 @@
 </template>
 <script>
 import HandleMetadata from "../HandleMetadata";
+import { metadataSchema, validateOption } from "../../schemas";
+import { handleErrors } from "../../helpers";
+
 export default {
   components: { HandleMetadata },
-  data() {
-    return {
-      form: {
-        title: "",
-        description: "",
-        rank: null,
-        selected: null,
-        dropdownList: [
-          { value: null, text: "Select category" },
-          { value: "people", text: "People" },
-          { value: "books", text: "Books" },
-          { value: "Movies", text: "Movies" },
-          { value: "food", text: "Food" }
-        ]
-      }
-    };
-  },
-  props: ["title"],
+  props: ["props"],
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
@@ -79,11 +65,21 @@ export default {
     hideModal() {
       this.$refs["favourite-modal"].hide();
     },
-    onReset(evt) {
-      evt.preventDefault();
-      this.form.title = "";
-      this.form.description = "";
-      this.form.rank = null;
+    removeMetadata(items, id) {
+      items.splice(id, 1);
+    },
+    async addMetadata(items, name, selected, value) {
+      try {
+        const newMetadata = {
+          name,
+          type: selected,
+          value
+        };
+        await metadataSchema.validate(newMetadata, validateOption);
+        items.push(newMetadata);
+      } catch (error) {
+        handleErrors(error);
+      }
     }
   }
 };

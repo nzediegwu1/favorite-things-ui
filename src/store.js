@@ -18,9 +18,15 @@ export default new Vuex.Store({
       id: null
     },
     favouriteModal: {
-      modalTitle: ""
+      modalTitle: "",
+      title: "",
+      description: "",
+      ranking: null,
+      category: null,
+      categoryList: []
     },
     categories: [],
+    metadata: [],
     singleCategory: {
       id: null,
       name: "",
@@ -58,6 +64,9 @@ export default new Vuex.Store({
     },
     setSingleCategory(state, payload) {
       state.singleCategory = payload;
+    },
+    setMetadata(state, payload) {
+      state.metadata = payload;
     }
   },
   actions: {}
