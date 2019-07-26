@@ -68,9 +68,6 @@ export default {
       return this.$store.state.categories;
     }
   },
-  data() {
-    return {};
-  },
   methods: {
     setCategoryModalState({ name, id }) {
       this.$store.commit("setCategoryModalState", {

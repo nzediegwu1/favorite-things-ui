@@ -57,7 +57,7 @@ import toastr from "toastr";
 import FavouriteModal from "./modals/FavouriteModal";
 import CategoryModal from "./modals/CategoryModal";
 import DeleteModal from "../components/modals/DeleteModal";
-import { categorySchema, validateOption } from "../schemas";
+import { categorySchema, favouriteSchema, validateOption } from "../schemas";
 import { handleErrors } from "../helpers";
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -98,6 +98,19 @@ export default {
         id: null
       });
     },
+    async addFavourite(newFavourite) {
+      try {
+        await favouriteSchema.validate(newFavourite, validateOption);
+        await axios.post("/favourites", newFavourite);
+        this.$store.commit("addFavourite", newFavourite);
+        axios.get(`/categories/${newFavourite.category}`).then(({ data }) => {
+          this.$store.commit("setSingleCategory", data);
+        });
+        toastr.success(`Successfully added favourite: ${newFavourite.title}`);
+      } catch (error) {
+        return handleErrors(error);
+      }
+    },
     setFavouriteModalState() {
       this.$store.commit("setFavouriteModalState", {
         modalTitle: "Add Favourite",
@@ -106,8 +119,9 @@ export default {
         ranking: null,
         category: this.getCategoryList[0].value,
         categoryList: this.getCategoryList,
-        handleSubmit: null
+        handleSubmit: this.addFavourite
       });
+      this.$store.commit("formMetadata", []);
     },
     async createCategory({ name }) {
       try {

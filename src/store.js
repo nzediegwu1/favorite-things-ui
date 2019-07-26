@@ -34,7 +34,8 @@ export default new Vuex.Store({
       name: "",
       count: 0,
       favourites: []
-    }
+    },
+    formMetadata: []
   },
   mutations: {
     setCategoryModalState(state, payload) {
@@ -54,9 +55,10 @@ export default new Vuex.Store({
     },
     addFavourite({ categories }, payload) {
       const category = categories.find(({ id }) => id === payload.category);
+      const count = category.count + 1;
       categories.splice(categories.indexOf(category), 1, {
         ...category,
-        count: category.count++
+        count
       });
     },
     updateCategory(state, payload) {
@@ -76,6 +78,9 @@ export default new Vuex.Store({
     },
     setMetadata(state, payload) {
       state.metadata = payload;
+    },
+    formMetadata(state, payload) {
+      state.formMetadata = payload;
     }
   },
   actions: {}

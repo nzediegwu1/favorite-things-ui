@@ -66,14 +66,21 @@ export default {
   methods: {
     async onSubmit(e) {
       e.preventDefault();
-      const submitError = await this.props.handleSubmit(this.props);
+      const data = { ...this.props, metadata: this.$store.state.formMetadata };
+      const submitError = await this.props.handleSubmit(data);
       if (!submitError) this.hideModal();
     },
     hideModal() {
       this.$refs["favourite-modal"].hide();
     },
-    removeMetadata(items, { id }) {
-      items.splice(id, 1);
+    removeMetadata(items, { index }) {
+      items.splice(index, 1);
+      this.$store.commit(
+        "formMetadata",
+        this.$store.state.formMetadata.filter(
+          (item, storeIndex) => storeIndex !== index
+        )
+      );
     },
     async addMetadata(items, name, selected, value) {
       try {
@@ -84,6 +91,10 @@ export default {
         };
         await metadataSchema.validate(newMetadata, validateOption);
         items.unshift(newMetadata);
+        this.$store.commit("formMetadata", [
+          newMetadata,
+          ...this.$store.state.formMetadata
+        ]);
       } catch (error) {
         handleErrors(error);
       }
