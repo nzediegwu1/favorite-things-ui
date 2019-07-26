@@ -17,13 +17,15 @@
       v-if="favouriteList.length"
     >
       <template slot="title" slot-scope="data">
-        <p v-b-popover.hover.bottom="data.item.title">{{generateContent(data.item.title, 17)}}</p>
+        <p v-b-popover.hover.bottom="data.item.title">
+          {{ generateContent(data.item.title, 17) }}
+        </p>
       </template>
 
       <template slot="description" slot-scope="data">
-        <p
-          v-b-popover.hover.bottom="data.item.description"
-        >{{generateContent(data.item.description, 23)}}</p>
+        <p v-b-popover.hover.bottom="data.item.description">
+          {{ generateContent(data.item.description, 23) }}
+        </p>
       </template>
 
       <template slot="logs" slot-scope="data" v-html="data">
@@ -36,7 +38,7 @@
         <b-button
           class="btn-metadata"
           v-b-modal.view-metadata
-          @click="()=>setMetadata(data.item.metadata)"
+          @click="() => setMetadata(data.item.metadata)"
         >
           <i class="fa fa-info-circle"></i>
         </b-button>
@@ -45,7 +47,7 @@
       <template slot="manage" slot-scope="data" v-html="data">
         <b-dropdown dropright text variant="primary">
           <b-dropdown-item
-            @click="()=>setFavouriteModalState(data.item)"
+            @click="() => setFavouriteModalState(data.item)"
             v-b-modal.favourite-modal
             href="#"
             class="edit-favourite"
@@ -53,7 +55,7 @@
             <i class="fa fa-edit">&nbsp; Edit</i>
           </b-dropdown-item>
           <b-dropdown-item
-            @click="()=>setDeleteModalState(data.item.title, data.item.id)"
+            @click="() => setDeleteModalState(data.item.title, data.item.id)"
             v-b-modal.delete-modal
             href="#"
           >
@@ -78,6 +80,7 @@
 
 <script>
 import axios from "axios";
+import toastr from "toastr";
 import ViewMetadata from "../components/modals/ViewMetadata";
 import ContentHeader from "../components/ContentHeader";
 import { metadataSchema, validateOption } from "../schemas";
@@ -140,9 +143,14 @@ export default {
     };
   },
   methods: {
-    removeMetadata(items, id) {
-      // make delete request for the metadata
-      items.splice(id, 1);
+    async removeMetadata(items, { index, id }) {
+      try {
+        await axios.delete(`/metadata/${id}`);
+        items.splice(index, 1);
+        toastr.success("Successfully deleted");
+      } catch (error) {
+        return handleErrors(error);
+      }
     },
     async addMetadata(items, name, selected, value) {
       try {

@@ -9,17 +9,36 @@
         >
           <b-card :title="category.name" text-variant="white">
             <router-link :to="`/categories/${category.id}`">
-              <b-card-img :src="`https://source.unsplash.com/random/600x600/?${category.name}`" top></b-card-img>
+              <b-card-img
+                :src="
+                  `https://source.unsplash.com/random/600x600/?${category.name}`
+                "
+                top
+              ></b-card-img>
             </router-link>
             <div class="manage-groups">
               <router-link :to="`/categories/${category.id}`">
-                <b-button size="sm" variant="outline-primary">{{category.count}} Favourites</b-button>
+                <b-button size="sm" variant="outline-primary"
+                  >{{ category.count }} Favourites</b-button
+                >
               </router-link>
-              <b-button class="logs" size="sm" href="#" variant="primary" @click="gotoAuditLogs">
+              <b-button
+                class="logs"
+                size="sm"
+                href="#"
+                variant="primary"
+                @click="gotoAuditLogs"
+              >
                 <i class="fa fa-book"></i>
               </b-button>
               <b-button
-                @click="()=>setCategoryModalState({id: category.id, name: category.name})"
+                @click="
+                  () =>
+                    setCategoryModalState({
+                      id: category.id,
+                      name: category.name
+                    })
+                "
                 v-b-modal.category-modal
                 size="sm"
                 href="#"
@@ -28,7 +47,7 @@
                 <i class="fa fa-edit"></i>
               </b-button>
               <b-button
-                @click="()=>setDeleteModalState(category.name, category.id)"
+                @click="() => setDeleteModalState(category.name, category.id)"
                 v-b-modal.delete-modal
                 size="sm"
                 href="#"

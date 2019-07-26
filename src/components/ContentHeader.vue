@@ -6,7 +6,7 @@
       </b-button>
     </b-col>
     <b-col cols="7">
-      <b class="header-font">{{headerText}}</b>
+      <b class="header-font">{{ headerText }}</b>
     </b-col>
   </b-row>
 </template>

@@ -1,5 +1,10 @@
 <template>
-  <b-modal ref="favourite-modal" hide-footer id="favourite-modal" :title="props.modalTitle">
+  <b-modal
+    ref="favourite-modal"
+    hide-footer
+    id="favourite-modal"
+    :title="props.modalTitle"
+  >
     <b-form class="favourite-form" @submit="onSubmit">
       <b-form-group>
         <div class="row">
@@ -29,21 +34,41 @@
       <b-form-group>
         <div class="row">
           <label class="col-3" for="rank">Rank</label>
-          <b-form-input class="col-9" id="rank" v-model="props.ranking" type="number" required></b-form-input>
+          <b-form-input
+            class="col-9"
+            id="rank"
+            v-model="props.ranking"
+            type="number"
+            required
+          ></b-form-input>
         </div>
       </b-form-group>
       <b-form-group>
         <div class="row">
           <label class="col-3" for="rank">Group</label>
-          <b-form-select class="col-9" v-model="props.category" :options="props.categoryList"></b-form-select>
+          <b-form-select
+            class="col-9"
+            v-model="props.category"
+            :options="props.categoryList"
+          ></b-form-select>
         </div>
       </b-form-group>
       <b-form-group class="metadata-title">
         <label for="metadata">Metadata</label>
       </b-form-group>
-      <HandleMetadata :content="[]" :removeMetadata="removeMetadata" :addMetadata="addMetadata"></HandleMetadata>
+      <HandleMetadata
+        :content="[]"
+        :removeMetadata="removeMetadata"
+        :addMetadata="addMetadata"
+      ></HandleMetadata>
       <div class="form-buttons">
-        <b-button class="cancel-form" variant="primary" type="reset" @click="hideModal">Cancel</b-button>
+        <b-button
+          class="cancel-form"
+          variant="primary"
+          type="reset"
+          @click="hideModal"
+          >Cancel</b-button
+        >
         <b-button type="submit" class="btn-favourite">Submit</b-button>
       </div>
     </b-form>
@@ -65,7 +90,7 @@ export default {
     hideModal() {
       this.$refs["favourite-modal"].hide();
     },
-    removeMetadata(items, id) {
+    removeMetadata(items, { id }) {
       items.splice(id, 1);
     },
     async addMetadata(items, name, selected, value) {

@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app-container">
     <div id="page-wrap">
-      <HeaderComponent/>
+      <HeaderComponent />
       <router-view></router-view>
     </div>
   </div>
