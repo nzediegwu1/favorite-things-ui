@@ -18,17 +18,9 @@
             </router-link>
             <div class="manage-groups">
               <router-link :to="`/categories/${category.id}`">
-                <b-button size="sm" variant="outline-primary"
-                  >{{ category.count }} Favourites</b-button
-                >
+                <b-button size="sm" variant="outline-primary">{{ category.count }} Favourites</b-button>
               </router-link>
-              <b-button
-                class="logs"
-                size="sm"
-                href="#"
-                variant="primary"
-                @click="gotoAuditLogs"
-              >
+              <b-button class="logs" size="sm" href="#" variant="primary" @click="gotoAuditLogs">
                 <i class="fa fa-book"></i>
               </b-button>
               <b-button

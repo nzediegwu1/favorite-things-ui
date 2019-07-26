@@ -34,16 +34,8 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input
-              placeholder="favourite thing"
-              class="mr-sm-2"
-            ></b-form-input>
-            <b-dropdown
-              variant="outline-primary"
-              split
-              text="Search"
-              class="m-2"
-            >
+            <b-form-input placeholder="favourite thing" class="mr-sm-2"></b-form-input>
+            <b-dropdown variant="outline-primary" split text="Search" class="m-2">
               <b-dropdown-item href="#">Friends</b-dropdown-item>
               <b-dropdown-item href="#">Movies</b-dropdown-item>
               <b-dropdown-item href="#">Books</b-dropdown-item>

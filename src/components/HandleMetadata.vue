@@ -1,26 +1,13 @@
 <template>
   <b-form-group id="metadata">
     <div class="row new-metadata">
-      <b-form-input
-        v-model="name"
-        placeholder="name"
-        class="col-3"
-        type="text"
-      ></b-form-input>
-      <b-form-select
-        v-model="selected"
-        class="col-3"
-        :options="options"
-      ></b-form-select>
+      <b-form-input v-model="name" placeholder="name" class="col-3" type="text"></b-form-input>
+      <b-form-select v-model="selected" class="col-3" :options="options"></b-form-select>
       <b-input-group class="col-5">
-        <b-form-input
-          v-model="value"
-          placeholder="value"
-          :type="selected"
-        ></b-form-input>
+        <b-form-input v-model="value" placeholder="value" :type="selected"></b-form-input>
         <b-input-group-append>
           <b-button
-            @click="() => addMetadata(items, name, selected, value)"
+            @click="() => addMetadata(items, name, selected, value, content.favourite)"
             class="btn-metadata"
             variant="secondary"
           >
@@ -29,15 +16,7 @@
         </b-input-group-append>
       </b-input-group>
     </div>
-    <b-table
-      v-if="items.length"
-      outlined
-      responsive
-      striped
-      hover
-      :fields="fields"
-      :items="items"
-    >
+    <b-table v-if="items.length" outlined responsive striped hover :fields="fields" :items="items">
       <template slot="del" slot-scope="data" v-html="data">
         <b-button
           @click="
@@ -66,7 +45,7 @@ export default {
       name: "",
       value: "",
       selected: "text",
-      items: this.content,
+      items: this.content.items,
       fields: [
         {
           key: "name",

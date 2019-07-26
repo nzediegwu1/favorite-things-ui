@@ -26,7 +26,7 @@ export default new Vuex.Store({
       categoryList: []
     },
     categories: [],
-    metadata: [],
+    metadata: { items: [], favourite: null },
     singleCategory: {
       id: null,
       name: "",

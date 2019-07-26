@@ -17,15 +17,13 @@
       v-if="favouriteList.length"
     >
       <template slot="title" slot-scope="data">
-        <p v-b-popover.hover.bottom="data.item.title">
-          {{ generateContent(data.item.title, 17) }}
-        </p>
+        <p v-b-popover.hover.bottom="data.item.title">{{ generateContent(data.item.title, 17) }}</p>
       </template>
 
       <template slot="description" slot-scope="data">
-        <p v-b-popover.hover.bottom="data.item.description">
-          {{ generateContent(data.item.description, 23) }}
-        </p>
+        <p
+          v-b-popover.hover.bottom="data.item.description"
+        >{{ generateContent(data.item.description, 23) }}</p>
       </template>
 
       <template slot="logs" slot-scope="data" v-html="data">
@@ -38,7 +36,7 @@
         <b-button
           class="btn-metadata"
           v-b-modal.view-metadata
-          @click="() => setMetadata(data.item.metadata)"
+          @click="() => setMetadata({items: data.item.metadata, favourite: data.item.id})"
         >
           <i class="fa fa-info-circle"></i>
         </b-button>
@@ -152,16 +150,18 @@ export default {
         return handleErrors(error);
       }
     },
-    async addMetadata(items, name, selected, value) {
+    async addMetadata(items, name, selected, value, favourite) {
       try {
         const newMetadata = {
           name,
-          type: selected,
-          value
+          data_type: selected,
+          value,
+          favourite
         };
         await metadataSchema.validate(newMetadata, validateOption);
-        // make a post request for the metadata
-        items.push(newMetadata);
+        const { data } = await axios.post("/metadata", newMetadata);
+        toastr.success("Successfully added metadata");
+        items.push(data);
       } catch (error) {
         handleErrors(error);
       }

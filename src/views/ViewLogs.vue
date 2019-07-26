@@ -1,19 +1,8 @@
 <template>
   <div class="container">
     <div class="text-center">
-      <ContentHeader
-        :goback="gotoFavourites"
-        :headerText="'Audit logs'"
-      ></ContentHeader>
-      <b-table
-        id="log-table"
-        outlined
-        responsive
-        striped
-        hover
-        :fields="fields"
-        :items="items"
-      ></b-table>
+      <ContentHeader :goback="gotoFavourites" :headerText="'Audit logs'"></ContentHeader>
+      <b-table id="log-table" outlined responsive striped hover :fields="fields" :items="items"></b-table>
     </div>
   </div>
 </template>

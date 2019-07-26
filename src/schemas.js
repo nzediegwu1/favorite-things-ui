@@ -4,7 +4,7 @@ const shortText = field =>
   string()
     .trim()
     .min(1, `${field} should be 1 or more characters`)
-    .max(30, `${field} should not be more than 30 characters`);
+    .max(100, `${field} should not be more than 30 characters`);
 
 export const categorySchema = object().shape({
   name: shortText("name")
@@ -12,6 +12,7 @@ export const categorySchema = object().shape({
 
 export const metadataSchema = object().shape({
   name: shortText("name"),
+  data_type: string(),
   value: shortText("value")
 });
 
