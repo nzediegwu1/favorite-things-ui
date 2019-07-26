@@ -62,6 +62,13 @@ import { handleErrors } from "../helpers";
 
 axios.defaults.baseURL = "http://localhost:8000";
 export default {
+  mounted() {
+    axios("/categories")
+      .then(({ data }) => {
+        this.$store.commit("setCategories", data);
+      })
+      .catch(error => handleErrors(error));
+  },
   computed: {
     categoryModalProps() {
       return this.$store.state.categoryModal;

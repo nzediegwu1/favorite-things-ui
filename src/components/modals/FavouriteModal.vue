@@ -34,7 +34,7 @@
       </b-form-group>
       <b-form-group>
         <div class="row">
-          <label class="col-3" for="rank">Cat.</label>
+          <label class="col-3" for="rank">Group</label>
           <b-form-select class="col-9" v-model="props.category" :options="props.categoryList"></b-form-select>
         </div>
       </b-form-group>
