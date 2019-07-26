@@ -303,7 +303,7 @@ thead {
 
 #metadata .table-responsive {
   overflow-y: auto;
-  max-height: 18em;
+  max-height: 16em;
 }
 .jumbotron {
   text-align: center;

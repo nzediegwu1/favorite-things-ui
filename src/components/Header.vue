@@ -105,7 +105,8 @@ export default {
         description: "",
         ranking: null,
         category: this.getCategoryList[0].value,
-        categoryList: this.getCategoryList
+        categoryList: this.getCategoryList,
+        handleSubmit: null
       });
     },
     async createCategory({ name }) {

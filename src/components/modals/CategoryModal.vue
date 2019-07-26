@@ -25,8 +25,7 @@ export default {
     },
     async handleSubmit(e) {
       e.preventDefault();
-      const { name, id } = this.props;
-      const submitError = await this.props.handleSubmit({ name, id });
+      const submitError = await this.props.handleSubmit(this.props);
       if (!submitError) this.hideModal();
     }
   }

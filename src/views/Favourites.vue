@@ -81,7 +81,7 @@ import axios from "axios";
 import toastr from "toastr";
 import ViewMetadata from "../components/modals/ViewMetadata";
 import ContentHeader from "../components/ContentHeader";
-import { metadataSchema, validateOption } from "../schemas";
+import { metadataSchema, favouriteSchema, validateOption } from "../schemas";
 import { handleErrors } from "../helpers";
 
 axios.defaults.baseURL = "http://localhost:8000";
@@ -161,7 +161,7 @@ export default {
         await metadataSchema.validate(newMetadata, validateOption);
         const { data } = await axios.post("/metadata", newMetadata);
         toastr.success("Successfully added metadata");
-        items.push(data);
+        items.unshift(data);
       } catch (error) {
         handleErrors(error);
       }
@@ -186,14 +186,28 @@ export default {
         return handleErrors(error);
       }
     },
-    setFavouriteModalState({ title, description, ranking, category }) {
+    async updateFavourite({ id, ...update }) {
+      try {
+        await favouriteSchema.validate(update, validateOption);
+        await axios.put(`/favourites/${id}`, update);
+        axios.get(`/categories/${update.category}`).then(({ data }) => {
+          this.$store.commit("setSingleCategory", data);
+        });
+        toastr.success(`Successfully updated favourite: ${update.title}`);
+      } catch (error) {
+        return handleErrors(error);
+      }
+    },
+    setFavouriteModalState({ id, title, description, ranking, category }) {
       this.$store.commit("setFavouriteModalState", {
         modalTitle: "Edit Favourite",
+        id,
         title,
         description,
         ranking,
         category,
-        categoryList: this.getCategoryList
+        categoryList: this.getCategoryList,
+        handleSubmit: this.updateFavourite
       });
     },
     gotoAuditLogs() {

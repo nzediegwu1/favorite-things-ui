@@ -38,14 +38,16 @@
           <b-form-select class="col-9" v-model="props.category" :options="props.categoryList"></b-form-select>
         </div>
       </b-form-group>
-      <b-form-group class="metadata-title">
-        <label for="metadata">Metadata</label>
-      </b-form-group>
-      <HandleMetadata
-        :content="{items:[]}"
-        :removeMetadata="removeMetadata"
-        :addMetadata="addMetadata"
-      ></HandleMetadata>
+      <div v-if="props.modalTitle === 'Add Favourite'">
+        <b-form-group class="metadata-title">
+          <label for="metadata">Metadata</label>
+        </b-form-group>
+        <HandleMetadata
+          :content="{items:[]}"
+          :removeMetadata="removeMetadata"
+          :addMetadata="addMetadata"
+        ></HandleMetadata>
+      </div>
       <div class="form-buttons">
         <b-button class="cancel-form" variant="primary" type="reset" @click="hideModal">Cancel</b-button>
         <b-button type="submit" class="btn-favourite">Submit</b-button>
@@ -62,9 +64,10 @@ export default {
   components: { HandleMetadata },
   props: ["props"],
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
+    async onSubmit(e) {
+      e.preventDefault();
+      const submitError = await this.props.handleSubmit(this.props);
+      if (!submitError) this.hideModal();
     },
     hideModal() {
       this.$refs["favourite-modal"].hide();
@@ -80,7 +83,7 @@ export default {
           value
         };
         await metadataSchema.validate(newMetadata, validateOption);
-        items.push(newMetadata);
+        items.unshift(newMetadata);
       } catch (error) {
         handleErrors(error);
       }
