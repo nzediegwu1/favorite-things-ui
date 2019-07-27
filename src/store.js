@@ -15,7 +15,8 @@ export default new Vuex.Store({
       modalTitle: "",
       handleDelete: null,
       name: "",
-      id: null
+      id: null,
+      category: null
     },
     favouriteModal: {
       modalTitle: "",
@@ -68,10 +69,18 @@ export default new Vuex.Store({
     deleteCategory(state, { id }) {
       state.categories = state.categories.filter(item => item.id !== id);
     },
-    deleteFavourite({ singleCategory }, { id }) {
+    deleteFavourite({ singleCategory, categories }, { id, category }) {
       singleCategory.favourites = singleCategory.favourites.filter(
         item => item.id !== id
       );
+      if (category) {
+        const categoryAffected = categories.find(({ id }) => id === category);
+        const count = categoryAffected.count - 1;
+        categories.splice(categories.indexOf(categoryAffected), 1, {
+          ...categoryAffected,
+          count
+        });
+      }
     },
     setSingleCategory(state, payload) {
       state.singleCategory = payload;
