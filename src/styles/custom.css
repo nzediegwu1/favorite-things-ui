@@ -311,3 +311,8 @@ thead {
 .logs:hover {
   color: #540109;
 }
+
+.show > .btn-outline-primary.dropdown-toggle {
+  background-color: #540109;
+  border-color: white;
+}
