@@ -9,8 +9,7 @@ export default {
   props: ["props"],
   methods: {
     handleOk() {
-      const { name, id, category } = this.props;
-      this.props.handleDelete(name, id, category);
+      this.props.handleDelete(this.props);
     }
   }
 };

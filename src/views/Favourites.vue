@@ -166,10 +166,10 @@ export default {
         handleErrors(error);
       }
     },
-    setDeleteModalState({ name, id, category }) {
+    setDeleteModalState({ title, id, category }) {
       this.$store.commit("setDeleteModalState", {
         modalTitle: "Delete Favourite",
-        name,
+        name: title,
         id,
         handleDelete: this.deleteFavourite,
         category
@@ -178,7 +178,7 @@ export default {
     setMetadata(metadata) {
       this.$store.commit("setMetadata", metadata);
     },
-    async deleteFavourite(name, id, category) {
+    async deleteFavourite({ name, id, category }) {
       try {
         await axios.delete(`/favourites/${id}`);
         this.$store.commit("deleteFavourite", { id, category });

@@ -90,7 +90,7 @@ export default {
         return handleErrors(error);
       }
     },
-    async deleteCategory(name, id) {
+    async deleteCategory({ name, id }) {
       try {
         await axios.delete(`/categories/${id}`);
         this.$store.commit("deleteCategory", { id });
