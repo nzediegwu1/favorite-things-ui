@@ -27,7 +27,7 @@
       </template>
 
       <template slot="logs" slot-scope="data" v-html="data">
-        <b-button class="btn-metadata" @click="gotoAuditLogs">
+        <b-button class="btn-metadata" @click="()=>gotoAuditLogs(data.item.id)">
           <i class="fa fa-book"></i>
         </b-button>
       </template>
@@ -36,7 +36,7 @@
         <b-button
           class="btn-metadata"
           v-b-modal.view-metadata
-          @click="() => setMetadata({items: data.item.metadata, favourite: data.item.id})"
+          @click="() => setMetadata(data.item)"
         >
           <i class="fa fa-info-circle"></i>
         </b-button>
@@ -77,18 +77,16 @@
 </template>
 
 <script>
-import axios from "axios";
 import toastr from "toastr";
 import ViewMetadata from "../components/modals/ViewMetadata";
 import ContentHeader from "../components/ContentHeader";
 import { metadataSchema, favouriteSchema, validateOption } from "../schemas";
-import { handleErrors } from "../helpers";
+import { handleErrors, client } from "../helpers";
 
-axios.defaults.baseURL = "http://localhost:8000";
 
 export default {
   mounted() {
-    axios.get(`/categories/${this.$route.params.id}`).then(({ data }) => {
+    client.get(`/categories/${this.$route.params.id}`).then(({ data }) => {
       this.$store.commit("setSingleCategory", data);
     });
   },
@@ -143,7 +141,7 @@ export default {
   methods: {
     async removeMetadata(items, { index, id }) {
       try {
-        await axios.delete(`/metadata/${id}`);
+        await client.delete(`/metadata/${id}`);
         items.splice(index, 1);
         toastr.success("Successfully deleted");
       } catch (error) {
@@ -159,7 +157,7 @@ export default {
           favourite
         };
         await metadataSchema.validate(newMetadata, validateOption);
-        const { data } = await axios.post("/metadata", newMetadata);
+        const { data } = await client.post("/metadata", newMetadata);
         toastr.success("Successfully added metadata");
         items.unshift(data);
       } catch (error) {
@@ -180,7 +178,7 @@ export default {
     },
     async deleteFavourite({ name, id, category }) {
       try {
-        await axios.delete(`/favourites/${id}`);
+        await client.delete(`/favourites/${id}`);
         this.$store.commit("deleteFavourite", { id, category });
         toastr.success(`Successfully deleted: ${name}`, "Favourite");
       } catch (error) {
@@ -190,8 +188,8 @@ export default {
     async updateFavourite({ id, ...update }) {
       try {
         await favouriteSchema.validate(update, validateOption);
-        await axios.put(`/favourites/${id}`, update);
-        axios.get(`/categories/${update.category}`).then(({ data }) => {
+        await client.put(`/favourites/${id}`, update);
+        client.get(`/categories/${update.category}`).then(({ data }) => {
           this.$store.commit("setSingleCategory", data);
         });
         toastr.success(`Successfully updated favourite: ${update.title}`);
@@ -211,8 +209,8 @@ export default {
         handleSubmit: this.updateFavourite
       });
     },
-    gotoAuditLogs() {
-      this.$router.push(`/favourites/${1}/logs`);
+    gotoAuditLogs(id) {
+      this.$router.push(`/favourites/${id}/logs`);
     },
     gotoHome() {
       this.$router.push("/");

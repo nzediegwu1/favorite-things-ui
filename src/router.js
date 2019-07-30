@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import FavouriteList from "./views/Favourites.vue";
-import ViewLogs from "./views/ViewLogs.vue";
+import AuditLog from "./views/AuditLog.vue";
 
 Vue.use(Router);
 
@@ -21,9 +21,9 @@ export default new Router({
       component: FavouriteList
     },
     {
-      path: "/favourites/:id/logs",
+      path: "/:resource/:id/logs",
       name: "audit-log",
-      component: ViewLogs
+      component: AuditLog
     }
   ]
 });

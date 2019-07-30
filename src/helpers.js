@@ -1,4 +1,5 @@
 import toastr from "toastr";
+import axios from "axios";
 
 export const handleErrors = ({ errors, name, response, message }) => {
   if (errors) return errors.map(error => toastr.error(error, name));
@@ -9,3 +10,8 @@ export const handleErrors = ({ errors, name, response, message }) => {
   }
   return toastr.error(message);
 };
+
+export const client = axios.create({
+  baseURL: "http://localhost:7000"
+  /* other custom settings */
+});

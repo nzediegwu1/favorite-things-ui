@@ -20,7 +20,7 @@
               <router-link :to="`/categories/${category.id}`">
                 <b-button size="sm" variant="outline-primary">{{ category.count }} Favourites</b-button>
               </router-link>
-              <b-button class="logs" size="sm" href="#" variant="primary" @click="gotoAuditLogs">
+              <b-button class="logs" size="sm" href="#" variant="primary" @click="()=>gotoAuditLogs(category.id)">
                 <i class="fa fa-book"></i>
               </b-button>
               <b-button
@@ -55,12 +55,9 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import toastr from "toastr";
 import { categorySchema, validateOption } from "../schemas";
-import { handleErrors } from "../helpers";
-
-axios.defaults.baseURL = "http://localhost:8000";
+import { client, handleErrors } from "../helpers";
 
 export default {
   computed: {
@@ -77,13 +74,13 @@ export default {
         id: id
       });
     },
-    gotoAuditLogs() {
-      this.$router.push(`/favourites/${1}/logs`);
+    gotoAuditLogs(id) {
+      this.$router.push(`/categories/${id}/logs`);
     },
     async updateCategoery({ name, id }) {
       try {
         await categorySchema.validate({ name }, validateOption);
-        const { data } = await axios.put(`/categories/${id}`, { name });
+        const { data } = await client.put(`/categories/${id}`, { name });
         this.$store.commit("updateCategory", data);
         toastr.success(`Successfully updated category: ${data.name}`);
       } catch (error) {
@@ -92,7 +89,7 @@ export default {
     },
     async deleteCategory({ name, id }) {
       try {
-        await axios.delete(`/categories/${id}`);
+        await client.delete(`/categories/${id}`);
         this.$store.commit("deleteCategory", { id });
         toastr.success(`Successfully deleted: ${name}`, "Category");
       } catch (error) {

@@ -29,7 +29,7 @@ export default new Vuex.Store({
       handleSubmit: null
     },
     categories: [],
-    metadata: { items: [], favourite: null },
+    metadata: { items: [], favourite: {} },
     singleCategory: {
       id: null,
       name: "",
@@ -86,7 +86,10 @@ export default new Vuex.Store({
       state.singleCategory = payload;
     },
     setMetadata(state, payload) {
-      state.metadata = payload;
+      state.metadata = {
+        items: payload.metadata,
+        favourite: { id: payload.id, title: payload.title }
+      };
     },
     formMetadata(state, payload) {
       state.formMetadata = payload;

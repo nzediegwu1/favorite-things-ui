@@ -52,18 +52,16 @@
 </template>
 
 <script>
-import axios from "axios";
 import toastr from "toastr";
 import FavouriteModal from "./modals/FavouriteModal";
 import CategoryModal from "./modals/CategoryModal";
 import DeleteModal from "../components/modals/DeleteModal";
 import { categorySchema, favouriteSchema, validateOption } from "../schemas";
-import { handleErrors } from "../helpers";
+import { client, handleErrors } from "../helpers";
 
-axios.defaults.baseURL = "http://localhost:8000";
 export default {
   mounted() {
-    axios("/categories")
+    client.get("/categories")
       .then(({ data }) => {
         this.$store.commit("setCategories", data);
       })
@@ -101,9 +99,9 @@ export default {
     async addFavourite(newFavourite) {
       try {
         await favouriteSchema.validate(newFavourite, validateOption);
-        await axios.post("/favourites", newFavourite);
+        await client.post("/favourites", newFavourite);
         this.$store.commit("addFavourite", newFavourite);
-        axios.get(`/categories/${newFavourite.category}`).then(({ data }) => {
+        client.get(`/categories/${newFavourite.category}`).then(({ data }) => {
           this.$store.commit("setSingleCategory", data);
         });
         toastr.success(`Successfully added favourite: ${newFavourite.title}`);
@@ -126,7 +124,7 @@ export default {
     async createCategory({ name }) {
       try {
         await categorySchema.validate({ name }, validateOption);
-        const { data } = await axios.post("/categories", { name });
+        const { data } = await client.post("/categories", { name });
         this.$store.commit("addCategory", data);
         toastr.success(`Successfully created category: ${data.name}`);
       } catch (error) {
