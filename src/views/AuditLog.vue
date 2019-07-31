@@ -16,12 +16,12 @@
           slot-scope="data"
           v-html="data"
         >{{new Date(data.item.date).toLocaleString('en-US')}}</template>
-        <template slot="old" slot-scope="data" v-html="data">
+        <template slot="before" slot-scope="data" v-html="data">
           <div @click="toast('my-toast', 'warning', data.item, 'Before')">
             <i class="fa fa-toggle-left"></i>
           </div>
         </template>
-        <template slot="new" slot-scope="data" v-html="data">
+        <template slot="after" slot-scope="data" v-html="data">
           <div @click="toast('my-toast', 'success', data.item, 'After')">
             <i class="fa fa-toggle-right"></i>
           </div>
@@ -68,7 +68,7 @@ export default {
       return this.$store.state.auditLog;
     },
     dataPeriod() {
-      return this.period === "Before" ? "old" : "new";
+      return this.period === "Before" ? "before" : "after";
     }
   },
   methods: {
@@ -98,10 +98,10 @@ export default {
           sortable: true
         },
         {
-          key: "old"
+          key: "before"
         },
         {
-          key: "new"
+          key: "after"
         }
       ]
     };
