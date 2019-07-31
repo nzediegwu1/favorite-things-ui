@@ -43,7 +43,7 @@
           <label for="metadata">Metadata</label>
         </b-form-group>
         <HandleMetadata
-          :content="{items:[]}"
+          :content="{items:[], favourite:{}}"
           :removeMetadata="removeMetadata"
           :addMetadata="addMetadata"
         ></HandleMetadata>

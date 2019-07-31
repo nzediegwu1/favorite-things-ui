@@ -7,7 +7,7 @@
         <b-form-input v-model="value" placeholder="value" :type="selected"></b-form-input>
         <b-input-group-append>
           <b-button
-            @click="() => addMetadata(items, name, selected, value, content.favourite)"
+            @click="() => addMetadata(items, name, selected, value, content.favourite.id)"
             class="btn-metadata"
             variant="secondary"
           >
