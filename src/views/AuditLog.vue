@@ -47,7 +47,7 @@
           v-for="[key, value] of Object.entries(item[dataPeriod] || {})"
         >
           <b-list-group-item v-if="!excluded.includes(key)" class="row">
-            <p class="col-4">{{key}}</p>|
+            <p class="col-4">{{key.charAt(0).toUpperCase() + key.slice(1)}}</p>|
             <p class="col-7">{{value}}</p>
           </b-list-group-item>
         </b-list-group>
@@ -94,7 +94,7 @@ export default {
       period: "",
       item: {},
       variant: "",
-      excluded: ["created_date", "modified_date"],
+      excluded: ["id", "created_date", "modified_date"],
       fields: [
         {
           key: "action",
