@@ -10,6 +10,7 @@
         hover
         :fields="fields"
         :items="auditLog.data"
+        v-if="auditLog.data.length"
       >
         <template
           slot="date"
@@ -27,6 +28,12 @@
           </div>
         </template>
       </b-table>
+      <div v-else>
+        <b-jumbotron
+          header="No record found"
+          lead="This resources was created before audit log was implemented!"
+        ></b-jumbotron>
+      </div>
       <b-toast toaster="b-toaster-top-center" id="my-toast" :variant="variant" solid>
         <div slot="toast-title" class="d-flex flex-grow-1 align-items-baseline">
           <strong

@@ -37,7 +37,7 @@ export default new Vuex.Store({
       favourites: []
     },
     formMetadata: [],
-    auditLog: {}
+    auditLog: { message: "", data: [] }
   },
   mutations: {
     setCategoryModalState(state, payload) {
