@@ -36,11 +36,15 @@ export default new Vuex.Store({
       count: 0,
       favourites: []
     },
-    formMetadata: []
+    formMetadata: [],
+    auditLog: {}
   },
   mutations: {
     setCategoryModalState(state, payload) {
       state.categoryModal = payload;
+    },
+    setAuditLog(state, payload) {
+      state.auditLog = payload;
     },
     setDeleteModalState(state, payload) {
       state.deleteModal = payload;

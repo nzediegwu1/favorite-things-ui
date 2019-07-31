@@ -319,3 +319,6 @@ thead {
 .list-group-item {
   display: flex;
 }
+.content-header .col-sm-9 {
+  text-align: center;
+}
