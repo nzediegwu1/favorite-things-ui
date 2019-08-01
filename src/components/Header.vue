@@ -34,14 +34,19 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input v-model="favourite" placeholder="favourite thing" class="mr-sm-2"></b-form-input>
+            <b-form-input
+              v-model="favourite"
+              placeholder="favourite thing"
+              class="mr-sm-2"
+            ></b-form-input>
             <b-dropdown variant="outline-primary" text="Search" class="m-2">
               <b-dropdown-item
-                @click="()=>gotoCategories(item.id)"
+                @click="() => gotoCategories(item.id)"
                 :key="item.id"
                 v-for="item of categories"
                 href="#"
-              >{{item.name}}</b-dropdown-item>
+                >{{ item.name }}</b-dropdown-item
+              >
             </b-dropdown>
           </b-nav-form>
         </b-navbar-nav>

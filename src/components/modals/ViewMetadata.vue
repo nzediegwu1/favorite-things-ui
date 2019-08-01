@@ -5,7 +5,11 @@
     hide-footer
     :title="`${content.favourite.title}'s Metadata`"
   >
-    <HandleMetadata :addMetadata="addMetadata" :removeMetadata="removeMetadata" :content="content"></HandleMetadata>
+    <HandleMetadata
+      :addMetadata="addMetadata"
+      :removeMetadata="removeMetadata"
+      :content="content"
+    ></HandleMetadata>
   </b-modal>
 </template>
 

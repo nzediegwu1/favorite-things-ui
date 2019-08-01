@@ -17,17 +17,22 @@
       v-if="favouriteList.length"
     >
       <template slot="title" slot-scope="data">
-        <p v-b-popover.hover.bottom="data.item.title">{{ generateContent(data.item.title, 17) }}</p>
+        <p v-b-popover.hover.bottom="data.item.title">
+          {{ generateContent(data.item.title, 17) }}
+        </p>
       </template>
 
       <template slot="description" slot-scope="data">
-        <p
-          v-b-popover.hover.bottom="data.item.description"
-        >{{ generateContent(data.item.description, 23) }}</p>
+        <p v-b-popover.hover.bottom="data.item.description">
+          {{ generateContent(data.item.description, 23) }}
+        </p>
       </template>
 
       <template slot="logs" slot-scope="data" v-html="data">
-        <b-button class="btn-metadata" @click="()=>gotoAuditLogs(data.item.id)">
+        <b-button
+          class="btn-metadata"
+          @click="() => gotoAuditLogs(data.item.id)"
+        >
           <i class="fa fa-book"></i>
         </b-button>
       </template>
