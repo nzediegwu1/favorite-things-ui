@@ -1,4 +1,8 @@
-# favourites
+# Favorite-things-ui
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/79ae4c09c16d56cb9159/maintainability)](https://codeclimate.com/github/nzediegwu1/favorite-things-ui/maintainability)
+
+Frontend for favourite things web application, using Vuejs UI framework
 
 ## Project setup
 ```
