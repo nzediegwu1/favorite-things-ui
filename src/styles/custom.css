@@ -322,3 +322,7 @@ thead {
 .content-header .col-sm-9 {
   text-align: center;
 }
+.dropdown-menu {
+  max-height: 15em;
+  overflow-y: auto;
+}

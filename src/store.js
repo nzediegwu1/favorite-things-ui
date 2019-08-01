@@ -37,9 +37,13 @@ export default new Vuex.Store({
       favourites: []
     },
     formMetadata: [],
-    auditLog: { message: "", data: [] }
+    auditLog: { message: "", data: [] },
+    categoryCondition: ""
   },
   mutations: {
+    setCategoryCondition(state, payload) {
+      state.categoryCondition = payload;
+    },
     setCategoryModalState(state, payload) {
       state.categoryModal = payload;
     },

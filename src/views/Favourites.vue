@@ -83,16 +83,23 @@ import ContentHeader from "../components/ContentHeader";
 import { metadataSchema, favouriteSchema, validateOption } from "../schemas";
 import { handleErrors, client } from "../helpers";
 
-
 export default {
   mounted() {
-    client.get(`/categories/${this.$route.params.id}`).then(({ data }) => {
-      this.$store.commit("setSingleCategory", data);
-    });
+    if (this.categoryCondition !== "search") {
+      client.get(`/categories/${this.$route.params.id}`).then(({ data }) => {
+        this.$store.commit("setSingleCategory", data);
+      });
+    }
+  },
+  destroyed() {
+    this.$store.commit("setCategoryCondition", "");
   },
   computed: {
     singleCategory() {
       return this.$store.state.singleCategory;
+    },
+    categoryCondition() {
+      return this.$store.state.categoryCondition;
     },
     metadataContent() {
       return this.$store.state.metadata;

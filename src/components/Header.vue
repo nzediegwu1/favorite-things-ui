@@ -34,12 +34,14 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input placeholder="favourite thing" class="mr-sm-2"></b-form-input>
+            <b-form-input v-model="favourite" placeholder="favourite thing" class="mr-sm-2"></b-form-input>
             <b-dropdown variant="outline-primary" text="Search" class="m-2">
-              <b-dropdown-item href="#">Friends</b-dropdown-item>
-              <b-dropdown-item href="#">Movies</b-dropdown-item>
-              <b-dropdown-item href="#">Books</b-dropdown-item>
-              <b-dropdown-item href="#">Food</b-dropdown-item>
+              <b-dropdown-item
+                @click="()=>gotoCategories(item.id)"
+                :key="item.id"
+                v-for="item of categories"
+                href="#"
+              >{{item.name}}</b-dropdown-item>
             </b-dropdown>
           </b-nav-form>
         </b-navbar-nav>
@@ -61,7 +63,8 @@ import { client, handleErrors } from "../helpers";
 
 export default {
   mounted() {
-    client.get("/categories")
+    client
+      .get("/categories")
       .then(({ data }) => {
         this.$store.commit("setCategories", data);
       })
@@ -77,6 +80,9 @@ export default {
     favouriteModalProps() {
       return this.$store.state.favouriteModal;
     },
+    categories() {
+      return this.$store.state.categories;
+    },
     getCategoryList() {
       return this.$store.state.categories.map(item => ({
         value: item.id,
@@ -84,9 +90,26 @@ export default {
       }));
     }
   },
+  data() {
+    return {
+      favourite: ""
+    };
+  },
   methods: {
     gotoHome() {
       this.$router.push("/");
+    },
+    gotoCategories(id) {
+      this.$router.push(`/categories/${id}`);
+      this.$store.commit("setCategoryCondition", "search");
+      client.get(`/categories/${this.$route.params.id}`).then(({ data }) => {
+        const favourites = data.favourites.filter(
+          ({ title, description }) =>
+            title.toLowerCase().includes(this.favourite.toLowerCase()) ||
+            description.toLowerCase().includes(this.favourite.toLowerCase())
+        );
+        this.$store.commit("setSingleCategory", { ...data, favourites });
+      });
     },
     setCategoryModalState() {
       this.$store.commit("setCategoryModalState", {
