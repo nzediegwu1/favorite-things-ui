@@ -12,6 +12,6 @@ export const handleErrors = ({ errors, name, response, message }) => {
 };
 
 export const client = axios.create({
-  baseURL: "http://localhost:7000"
+  baseURL: process.env.VUE_APP_BASE_URL
   /* other custom settings */
 });
