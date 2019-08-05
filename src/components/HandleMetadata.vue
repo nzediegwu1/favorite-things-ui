@@ -13,7 +13,15 @@
         :options="options"
       ></b-form-select>
       <b-input-group class="col-5">
+        <b-form-textarea
+          class="col-9"
+          v-model="value"
+          v-if="selected === 'enum'"
+          :placeholder="`Enter list of ${name || 'items'}`"
+          rows="1"
+        ></b-form-textarea>
         <b-form-input
+          v-else
           v-model="value"
           placeholder="value"
           :type="selected"

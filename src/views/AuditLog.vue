@@ -15,18 +15,24 @@
         :items="auditLog.data"
         v-if="auditLog.data.length"
       >
-        <template slot="date" slot-scope="data" v-html="data">
-          {{ new Date(data.item.date).toLocaleString("en-US") }}
-        </template>
+        <template slot="date" slot-scope="data" v-html="data">{{
+          new Date(data.item.date).toLocaleString("en-US")
+        }}</template>
         <template slot="before" slot-scope="data" v-html="data">
-          <div @click="toast('my-toast', 'warning', data.item, 'Before')">
+          <b-button
+            @click="toast('my-toast', 'warning', data.item, 'Before')"
+            variant="outline-secondary"
+          >
             <i class="fa fa-toggle-left"></i>
-          </div>
+          </b-button>
         </template>
         <template slot="after" slot-scope="data" v-html="data">
-          <div @click="toast('my-toast', 'success', data.item, 'After')">
+          <b-button
+            @click="toast('my-toast', 'success', data.item, 'After')"
+            variant="outline-secondary"
+          >
             <i class="fa fa-toggle-right"></i>
-          </div>
+          </b-button>
         </template>
       </b-table>
       <div v-else>

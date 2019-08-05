@@ -326,3 +326,7 @@ thead {
   max-height: 15em;
   overflow-y: auto;
 }
+.new-metadata input,
+.custom-select {
+  height: auto;
+}
